@@ -21,11 +21,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="蚂蚁搬装查询系统"
+            android:text="蚂蚁搬装"
             android:textColor="@color/blue"
             android:textSize="35dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="70dp"
+            android:layout_marginBottom="1dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="业务查询系统"
+            android:textColor="@color/blue"
+            android:textSize="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="30dp"
             />
         <LinearLayout android:layout_width="match_parent"
@@ -47,8 +57,8 @@
                 android:ems="10"
                 android:id="@+id/login_name"
                 android:hint="用户名/手机号码"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
+
+
 
                 android:singleLine="true" >
 
@@ -75,7 +85,7 @@
                 android:password="true"
                 android:ems="10"
                 android:hint="密码"
-                android:focusable="false"
+
                 android:id="@+id/login_pass"
                 android:singleLine="true" >
 
@@ -97,7 +107,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="40dip"
             android:layout_marginRight="40dip"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
             android:id="@+id/login"
             android:background="@drawable/btn_red5_selector"

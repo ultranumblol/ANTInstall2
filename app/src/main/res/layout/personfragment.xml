@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
                 android:text="退出登录"
+                android:id="@+id/login_out"
                 android:background="@drawable/bgred_radius5"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
