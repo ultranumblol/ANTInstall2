@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+
+            android:text="消 息"
+
+            />
+
+
+    </LinearLayout>
+<com.wgz.ant.antinstall.view.ReboundScrollView
+    android:layout_width="match_parent"
+    android:layout_marginTop="5dip"
+    android:scrollbars="none"
+    android:layout_height="match_parent">
+    <com.wgz.ant.antinstall.view.ScrollListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/msg_lv">
+
+    </com.wgz.ant.antinstall.view.ScrollListView>
+
+</com.wgz.ant.antinstall.view.ReboundScrollView>
+
+
+</LinearLayout>
