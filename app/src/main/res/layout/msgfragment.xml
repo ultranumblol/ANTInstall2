@@ -20,19 +20,20 @@
 
 
     </LinearLayout>
-<com.wgz.ant.antinstall.view.ReboundScrollView
+<com.wgz.ant.antinstall.view.RefreshableView
     android:layout_width="match_parent"
     android:layout_marginTop="5dip"
     android:scrollbars="none"
+    android:id="@+id/refreshable_view"
     android:layout_height="match_parent">
-    <com.wgz.ant.antinstall.view.ScrollListView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/msg_lv">
+        android:id="@+id/msg_lv"/>
 
-    </com.wgz.ant.antinstall.view.ScrollListView>
 
-</com.wgz.ant.antinstall.view.ReboundScrollView>
+
+</com.wgz.ant.antinstall.view.RefreshableView>
 
 
 </LinearLayout>

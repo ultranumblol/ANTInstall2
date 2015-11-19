@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.wgz.ant.antinstall.R;
+import com.wgz.ant.antinstall.view.RefreshableView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.Map;
  * Created by qwerr on 2015/11/16.
  */
 public class MsgFragment extends Fragment {
+    RefreshableView refreshableView;
     private ListView msglv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,8 +31,20 @@ public class MsgFragment extends Fragment {
 
     private void initview(View view) {
         msglv = (ListView) view .findViewById(R.id.msg_lv);
+        refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
         msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
                 R.layout.msglv_item,new String[]{"sys"},new int[]{R.id.msglv_tv}));
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
+            @Override
+            public void onRefresh() {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+            }
+        },0);
 
     }
     private List<Map<String,Object>> CeshiDATA() {

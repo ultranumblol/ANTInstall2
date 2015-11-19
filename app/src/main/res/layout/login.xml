@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="蚂蚁搬装"
+            android:text="蚂  蚁"
             android:textColor="@color/blue"
             android:textSize="35dp"
             android:layout_gravity="center_horizontal"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="业务查询系统"
+            android:text="搬装业务系统"
             android:textColor="@color/blue"
             android:textSize="35dp"
             android:layout_gravity="center_horizontal"

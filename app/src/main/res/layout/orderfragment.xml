@@ -32,27 +32,45 @@
             android:gravity="center"
             android:layout_height="40dp"
             android:text="已妥投"
+            android:textColor="@color/red"
             android:id="@+id/tuotou_tv"
-            android:background="@drawable/bordergray_table_leftradius_ontrans"
+            android:background="@drawable/btn_red5_selector_left"
             android:textSize="17dp"/>
         <TextView
             android:layout_width="90dp"
             android:layout_height="40dp"
             android:textSize="17dp"
             android:gravity="center"
+            android:textColor="@color/white"
             android:id="@+id/untuotou_tv"
-            android:background="@drawable/bordergray_table_rightradius_ontrans"
+            android:background="@drawable/bordergray_table_rightradius_ontrans_pressed"
             android:text="未妥投"/>
     </LinearLayout>
-    <ListView
+    <com.wgz.ant.antinstall.view.RefreshableView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:id="@+id/untuotou_lv"></ListView>
-    <ListView
+        android:layout_height="match_parent"
+        android:id="@+id/refreshable_view2">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/untuotou_lv"></ListView>
+
+
+    </com.wgz.ant.antinstall.view.RefreshableView>
+    <com.wgz.ant.antinstall.view.RefreshableView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/refreshable_view3"
         android:visibility="gone"
-        android:id="@+id/tuotou_lv"></ListView>
+        >
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:id="@+id/tuotou_lv"></ListView>
+
+
+    </com.wgz.ant.antinstall.view.RefreshableView>
 </LinearLayout>

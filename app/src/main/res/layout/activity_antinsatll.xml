@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <android.support.v4.view.ViewPager
+    <com.wgz.ant.antinstall.view.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,14 +13,20 @@
 
 
 
-    </android.support.v4.view.ViewPager>
+    </com.wgz.ant.antinstall.view.CustomViewPager>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_weight="0"
+        android:background="@color/gray"
+        >
+
+    </TextView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_weight="0"
-
-        android:background="@drawable/bg_white_trans"
         >
         <LinearLayout
             android:id="@+id/bar1"
@@ -36,18 +42,18 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/logo11" />
+                android:src="@drawable/bar1" />
 
             <TextView
                 android:id="@+id/mainbar1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dip"
-                android:textColor="@color/black"
+                android:textColor="@color/blue"
                 android:gravity="center_horizontal"
                 android:onClick="onclickMainbar"
                 android:text="业务消息"
-                android:textSize="12dip" />
+                android:textSize="11dip" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +70,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/logo11" />
+                android:src="@drawable/bar2" />
 
             <TextView
                 android:id="@+id/mainbar2"
@@ -74,8 +80,8 @@
                 android:gravity="center_horizontal"
                 android:onClick="onclickMainbar"
                 android:text="我的订单"
-                android:textColor="@color/black"
-                android:textSize="12dip" />
+                android:textColor="@color/blue"
+                android:textSize="11dip" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/bar3"
@@ -91,7 +97,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/logo11" />
+                android:src="@drawable/bar3" />
 
             <TextView
                 android:id="@+id/mainbar3"
@@ -101,8 +107,8 @@
                 android:gravity="center_horizontal"
                 android:onClick="onclickMainbar"
                 android:text="地图"
-                android:textColor="@color/black"
-                android:textSize="12dip" />
+                android:textColor="@color/blue"
+                android:textSize="11dip" />
         </LinearLayout>
         <LinearLayout
             android:id="@+id/bar4"
@@ -118,7 +124,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/logo11" />
+                android:src="@drawable/bar4" />
 
             <TextView
                 android:id="@+id/mainbar4"
@@ -128,8 +134,8 @@
                 android:gravity="center_horizontal"
                 android:onClick="onclickMainbar"
                 android:text="个人设置"
-                android:textColor="@color/black"
-                android:textSize="12dip" />
+                android:textColor="@color/blue"
+                android:textSize="11dip" />
         </LinearLayout>
 
     </LinearLayout>

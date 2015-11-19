@@ -18,7 +18,7 @@
 
             />
     </LinearLayout>
-    <ScrollView
+    <com.wgz.ant.antinstall.view.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"
@@ -43,20 +43,80 @@
                 android:layout_marginTop="5dip"/>
             <TextView
                 android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关于本产品"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                android:textSize="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="建议反馈"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                android:textSize="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本与说明"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                android:textSize="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/gray"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="37dp"
                 android:text="退出登录"
                 android:id="@+id/login_out"
                 android:background="@drawable/bgred_radius5"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"/>
 
         </LinearLayout>
 
-    </ScrollView>
+    </com.wgz.ant.antinstall.view.ReboundScrollView>
 
 
 </LinearLayout>

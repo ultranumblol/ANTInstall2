@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:text="业务消息："
     android:textSize="18dp"
+    android:layout_marginLeft="10dp"
     android:textColor="@color/black"
     android:layout_margin="5dip"
     />
@@ -18,5 +19,5 @@
         android:textSize="17dp"
         android:id="@+id/msglv_tv"
         android:textColor="@color/black"
-        android:layout_marginLeft="20dip"/>
+        android:layout_marginLeft="30dip"/>
 </LinearLayout>

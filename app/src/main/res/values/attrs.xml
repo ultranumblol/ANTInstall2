@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MaskImage">
+
+        <!-- 背景,底色,内容 -->
+        <attr name="image" format="reference"></attr>
+        <!-- 上层遮罩 -->
+        <attr name="mask" format="reference"></attr>
+    </declare-styleable>
+
+</resources>
