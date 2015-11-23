@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import java.io.File;
  */
 public class PersonFragment extends Fragment {
     private TextView outLogin;
+    private LinearLayout testmap;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.personfragment,null);
@@ -30,6 +32,10 @@ public class PersonFragment extends Fragment {
 
     private void initview(View view) {
         outLogin = (TextView) view.findViewById(R.id.login_out);
+        testmap = (LinearLayout) view.findViewById(R.id.testmap);
+
+
+
         outLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.baidu.mapapi.SDKInitializer;
 import com.wgz.ant.antinstall.adapter.MyFragmentPagerAdapter;
 import com.wgz.ant.antinstall.fragment.MapFragment;
+import com.wgz.ant.antinstall.fragment.MapFragment2;
 import com.wgz.ant.antinstall.fragment.MsgFragment;
 import com.wgz.ant.antinstall.fragment.OrderFragment;
 import com.wgz.ant.antinstall.fragment.PersonFragment;
+import com.wgz.ant.antinstall.fragment.RecyclerFragment;
 import com.wgz.ant.antinstall.view.CustomViewPager;
 
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ public class MainActivity extends FragmentActivity {
     private MapFragment mapFragment;
     private PersonFragment personFragment;
     private OrderFragment orderFragment;
+    private MapFragment2 mapFragment2;
+    private RecyclerFragment recyclerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class MainActivity extends FragmentActivity {
         mapFragment = new MapFragment();
         orderFragment = new OrderFragment();
         personFragment = new PersonFragment();
+        mapFragment2 = new MapFragment2();
+        recyclerFragment = new RecyclerFragment();
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
         bar1= (LinearLayout) findViewById(R.id.bar1);
         bar2= (LinearLayout) findViewById(R.id.bar2);
@@ -62,15 +68,17 @@ public class MainActivity extends FragmentActivity {
         fragments = new ArrayList<Fragment>();
         fragments.add(msgFragment);
         fragments.add(orderFragment);
-        fragments.add(mapFragment);
+        //fragments.add(mapFragment);
+        fragments.add(mapFragment2);
         fragments.add(personFragment);
-
+        //fragments.add(recyclerFragment);
         mainviewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
         mainviewpager.setCurrentItem(0);
         barimg1.setImageResource(R.drawable.bar11);
         bartv1.setTextColor(Color.WHITE);
         bar1.setBackgroundColor(android.graphics.Color.parseColor("#0080ff"));
     }
+
 
     public  void BaronClick(View view){
         barimg1.setImageResource(R.drawable.bar1);

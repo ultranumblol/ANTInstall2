@@ -11,24 +11,34 @@
         android:background="@color/blue"
 
         android:orientation="horizontal">
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="18dp"
-            android:src="@drawable/player_back_icon_pressed"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/order_back_img"
-            />
-        <TextView
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="返回"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:id="@+id/order_back"
-            android:textSize="16dp"
-            android:textColor="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="28dp"
-            />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="18dp"
+                android:src="@drawable/back2"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/order_back_img"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+
+                />
+
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,7 +145,32 @@
                 android:layout_height="1px"
                 android:background="@color/gray"
                 />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单状态"
+                    style="@style/orderTitle_style"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="内容"
+                    style="@style/orderContent_style"
+                    />
 
+            </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -157,6 +192,11 @@
                     />
 
             </RelativeLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"

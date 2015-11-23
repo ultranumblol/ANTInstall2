@@ -26,4 +26,5 @@ dependencies {
     compile files('libs/com.umeng.message.lib_v2.5.0.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('src/main/jniLibs/BaiduLBS_Android.jar')
+    compile files('libs/RecyclerView.jar')
 }

@@ -5,16 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 /**
  * Created by qwerr on 2015/11/18.
  */
 public class OrderActivity extends Activity {
-    private TextView back;
-    private ImageView backimg;
+    private LinearLayout back;
+
     private LinearLayout orderfinish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +29,8 @@ public class OrderActivity extends Activity {
         String ordertype = bundle.getString("type");
 
 
-        back = (TextView) findViewById(R.id.order_back);
-        backimg = (ImageView) findViewById(R.id.order_back_img);
+        back = (LinearLayout) findViewById(R.id.order_back);
+
         orderfinish = (LinearLayout) findViewById(R.id.order_finish);
         if (ordertype.equals("1")){
             orderfinish.setVisibility(View.GONE);
@@ -43,12 +41,6 @@ public class OrderActivity extends Activity {
         }
 
         back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        backimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
