@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.wgz.ant.antinstall"
@@ -20,11 +20,12 @@ android {
 }
 
 dependencies {
+    compile 'com.android.support:design:23.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile files('libs/com.umeng.message.lib_v2.5.0.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('src/main/jniLibs/BaiduLBS_Android.jar')
-    compile files('libs/RecyclerView.jar')
+
 }

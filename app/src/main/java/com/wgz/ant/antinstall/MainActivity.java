@@ -15,6 +15,7 @@ import com.wgz.ant.antinstall.adapter.MyFragmentPagerAdapter;
 import com.wgz.ant.antinstall.fragment.MapFragment;
 import com.wgz.ant.antinstall.fragment.MapFragment2;
 import com.wgz.ant.antinstall.fragment.MsgFragment;
+import com.wgz.ant.antinstall.fragment.NewFragment;
 import com.wgz.ant.antinstall.fragment.OrderFragment;
 import com.wgz.ant.antinstall.fragment.PersonFragment;
 import com.wgz.ant.antinstall.fragment.RecyclerFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends FragmentActivity {
     private PersonFragment personFragment;
     private OrderFragment orderFragment;
     private MapFragment2 mapFragment2;
+    private NewFragment newFragment;
     private RecyclerFragment recyclerFragment;
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_antinsatll);
+
         initview();
 
     }
@@ -51,7 +54,8 @@ public class MainActivity extends FragmentActivity {
         orderFragment = new OrderFragment();
         personFragment = new PersonFragment();
         mapFragment2 = new MapFragment2();
-        recyclerFragment = new RecyclerFragment();
+        //recyclerFragment = new RecyclerFragment();
+        newFragment = new NewFragment();
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
         bar1= (LinearLayout) findViewById(R.id.bar1);
         bar2= (LinearLayout) findViewById(R.id.bar2);
@@ -72,6 +76,7 @@ public class MainActivity extends FragmentActivity {
         fragments.add(mapFragment2);
         fragments.add(personFragment);
         //fragments.add(recyclerFragment);
+        //fragments.add(newFragment);
         mainviewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
         mainviewpager.setCurrentItem(0);
         barimg1.setImageResource(R.drawable.bar11);
