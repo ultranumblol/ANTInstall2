@@ -15,7 +15,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.wgz.ant.antinstall.util.CheckLOGIN;
+
+import com.wgz.ant.antinstall.util.CheckLogin;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 
 /**
@@ -49,7 +50,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 String lname = login_name.getText().toString();
                 String pass = login_pass.getText().toString();
-                CheckLOGIN cl = new CheckLOGIN(lname, pass);
+                CheckLogin cl = new CheckLogin(lname, pass);
                 cl.execute();
                 cl.setOnDataFinishedListener(new OnDataFinishedListener() {
                     @Override
