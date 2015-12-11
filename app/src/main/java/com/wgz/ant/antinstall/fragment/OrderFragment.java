@@ -41,8 +41,8 @@ public class OrderFragment extends Fragment {
         refreshableView3 = (RefreshableView) view.findViewById(R.id.refreshable_view3);
         tuotou = (TextView) view.findViewById(R.id.tuotou_tv);
         untuotou = (TextView) view.findViewById(R.id.untuotou_tv);
-        tuotoulv = (ListView) view.findViewById(R.id.tuotou_lv);
-        untuotoulv = (ListView) view.findViewById(R.id.untuotou_lv);
+            tuotoulv = (ListView) view.findViewById(R.id.tuotou_lv);
+            untuotoulv = (ListView) view.findViewById(R.id.untuotou_lv);
         tuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData(),R.layout.order_lv_item,
                 new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));
         untuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData2(),R.layout.order_lv_item,

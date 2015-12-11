@@ -36,17 +36,38 @@ public class MainActivity extends FragmentActivity {
     private MapFragment2 mapFragment2;
     private NewFragment newFragment;
     private RecyclerFragment recyclerFragment;
-
+    //爆炸区域
+   // private ExplosionField mExplosionField;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_antinsatll);
-
+       // mExplosionField = ExplosionField.attach2Window(this);
+       // addListener(findViewById(R.id.root));
         initview();
 
     }
+
+    /*private void addListener(View root) {
+        if (root instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup) root;
+            for (int i = 0; i < parent.getChildCount(); i++) {
+                addListener(parent.getChildAt(i));
+            }
+        } else {
+            root.setClickable(true);
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mExplosionField.explode(v);
+                    v.setOnClickListener(null);
+                }
+            });
+        }
+    }*/
 
     public void initview() {
          msgFragment = new MsgFragment();
