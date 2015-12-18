@@ -63,7 +63,6 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     BaiduMap mBaidumap = null;
     //搜索相关
     RoutePlanSearch mSearch = null;    // 搜索模块，也可去掉地图模块独立使用
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

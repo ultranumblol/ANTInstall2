@@ -31,14 +31,14 @@ public class OrderActivity extends Activity {
 
         back = (LinearLayout) findViewById(R.id.order_back);
 
-        orderfinish = (LinearLayout) findViewById(R.id.order_finish);
-        if (ordertype.equals("1")){
+       // orderfinish = (LinearLayout) findViewById(R.id.order_finish);
+       /* if (ordertype.equals("1")){
             orderfinish.setVisibility(View.GONE);
 
         }if (ordertype.equals("0")){
             orderfinish.setVisibility(View.VISIBLE);
 
-        }
+        }*/
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,6 +20,7 @@
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".OrderActivity"></activity>
         <activity android:name=".RoutePlanDemo"></activity>
+        <activity android:name=".MsgActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />

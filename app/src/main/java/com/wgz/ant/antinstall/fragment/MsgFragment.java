@@ -1,13 +1,16 @@
 package com.wgz.ant.antinstall.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
 import com.wgz.ant.antinstall.view.RefreshableView;
 
@@ -34,11 +37,17 @@ public class MsgFragment extends Fragment {
         refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
         msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
                 R.layout.msglv_item,new String[]{"sys"},new int[]{R.id.msglv_tv}));
+        msglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), MsgActivity.class));
+            }
+        });
         refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
             @Override
             public void onRefresh() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
