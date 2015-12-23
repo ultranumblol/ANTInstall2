@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.wgz.ant.antinstall.OrderActivity;
+import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
 import com.wgz.ant.antinstall.view.RefreshableView;
 
@@ -53,11 +53,9 @@ public class OrderFragment extends Fragment {
                 TextView orderId = (TextView) view.findViewById(R.id.order_id);
                 TextView orderType = (TextView) view.findViewById(R.id.order_type);
                 Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putString("id",orderId.getText().toString());
-                bundle.putString("type",orderType.getText().toString());
-                intent.putExtra("order", bundle);
-                intent.setClass(getActivity(),OrderActivity.class);
+                intent.putExtra("order",true);
+
+                intent.setClass(getActivity(),MsgActivity.class);
                 startActivity(intent);
 
             }
@@ -68,11 +66,8 @@ public class OrderFragment extends Fragment {
                 TextView orderId = (TextView) view.findViewById(R.id.order_id);
                 TextView orderType = (TextView) view.findViewById(R.id.order_type);
                 Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putString("id",orderId.getText().toString());
-                bundle.putString("type",orderType.getText().toString());
-                intent.putExtra("order", bundle);
-                intent.setClass(getActivity(),OrderActivity.class);
+                intent.putExtra("order",true);
+                intent.setClass(getActivity(),MsgActivity.class);
                 startActivity(intent);
             }
         });

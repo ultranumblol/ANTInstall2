@@ -36,7 +36,7 @@ public class MsgFragment extends Fragment {
         msglv = (ListView) view .findViewById(R.id.msg_lv);
         refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
         msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
-                R.layout.msglv_item,new String[]{"sys"},new int[]{R.id.msglv_tv}));
+                R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msglv_tv}));
         msglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,7 +60,7 @@ public class MsgFragment extends Fragment {
          List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
         for (int i = 0;i<5;i++){
             Map<String,Object> map = new HashMap<>();
-            map.put("sys","系统消息"+(i+1));
+            map.put("name","张"+(i+1));
             list1.add(map);
 
         }

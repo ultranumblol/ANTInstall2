@@ -18,7 +18,7 @@ public class OrderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.order);
+        setContentView(R.layout.msg);
         initview();
     }
 
@@ -29,7 +29,7 @@ public class OrderActivity extends Activity {
         String ordertype = bundle.getString("type");
 
 
-        back = (LinearLayout) findViewById(R.id.order_back);
+        back = (LinearLayout) findViewById(R.id.msg_back);
 
        // orderfinish = (LinearLayout) findViewById(R.id.order_finish);
        /* if (ordertype.equals("1")){
