@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="70dp"
+    android:background="@color/msg_item_back"
+    >
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_credit_card_red_600_24dp"
+
+        android:id="@+id/msg_img"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="12dp"
+        android:id="@+id/msg_bianhao"
+        android:layout_toRightOf="@id/msg_img"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="业务编号："
+            android:text="业务编号:"
             android:textSize="16dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
@@ -21,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
+            android:id="@+id/msg_workID"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_marginLeft="20dp"
@@ -31,13 +48,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="6dp"
+    android:layout_toRightOf="@id/msg_img"
+    android:layout_below="@id/msg_bianhao"
     >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="安装工人："
-        android:textSize="16dp"
+        android:text="安装工人:"
+        android:textSize="15dp"
 
         android:layout_gravity="center_vertical"
         android:textColor="@color/black"
@@ -45,12 +64,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:id="@+id/msglv_tv"
+        android:textSize="15dp"
+        android:id="@+id/msg_workerName"
         android:layout_gravity="center_vertical"
         android:textColor="@color/black"
         android:layout_marginLeft="20dp"
         android:text="张三"/>
 
 </LinearLayout>
-</LinearLayout>
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/back2"/>
+
+</RelativeLayout>

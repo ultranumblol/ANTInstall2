@@ -16,23 +16,16 @@ public class CheckpassInputstream {
     /**
      * 通过url 获得服务器返回的xml数据，转换成InputStream中
      * @param username 姓名
-     * @param password 密码
+     * @param userpassword 密码
      * @param sign 签名
-     * @param setctorid 所属部门id
      * @return
      */
-    public InputStream getStream(String username,String password,String setctorid,String sign){
+    public InputStream getStream(String username,String userpassword,String sign){
         // 定义获取文件内容的URL
         //String path = "http://hr.chinaant.com/xmlhandler.aspx?username=123&password=123&sign=5B7D1F8CEFBF1C80AEB73329C8A378A1";
         String path ="";
-        String path2 = "http://hr.chinaant.com/ValidationHandler.aspx?"+username+"&"+password+"&sign="+sign;
+        String path2 = "http://wuliu.chinaant.com/AppHandler.aspx?"+username+"&"+userpassword+"&sign="+sign;
 
-        String path3 = "http://hr.chinaant.com/ValidationHandler.aspx?"+username+"&"+setctorid+"&"+password+"&sign="+sign;
-        if (setctorid==null) {
-            path=path2;
-        }if (setctorid!=null){
-            path=path3;
-        }
 
         Log.i("xml", path2);
         URL myURL = null;

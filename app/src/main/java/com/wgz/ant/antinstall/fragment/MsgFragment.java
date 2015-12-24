@@ -12,7 +12,10 @@ import android.widget.SimpleAdapter;
 
 import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
+import com.wgz.ant.antinstall.adapter.MsgFmtAdapter;
+import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.view.RefreshableView;
+import com.wgz.ant.antinstall.xmlpraser.ParserWorkerXml;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,9 @@ public class MsgFragment extends Fragment {
     private void initview(View view) {
         msglv = (ListView) view .findViewById(R.id.msg_lv);
         refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
+
+
+
         msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
                 R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msglv_tv}));
         msglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,6 +71,30 @@ public class MsgFragment extends Fragment {
 
         }
         return list1;
+    }
+
+    /*
+    * 初始化数据
+    * */
+    private void initData(){
+        ParserWorkerXml pw = new ParserWorkerXml("18669107011");
+        pw.execute();
+        pw.setOnDataFinishedListener(new OnDataFinishedListener() {
+            @Override
+            public void onDataSuccessfully(Object data) {
+                List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
+                list1 = (List<Map<String, Object>>) data;
+                msglv.setAdapter(new MsgFmtAdapter(list1,getContext()));
+            }
+
+            @Override
+            public void onDataFailed() {
+
+            }
+        });
+
+
+
     }
 
 }

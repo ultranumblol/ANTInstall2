@@ -27,7 +27,7 @@ public class CheckLogin extends AsyncTask {
         String sign =sm.getsign("username="+name,"userpassword="+pass, null);//通过用户名，密码制作sign
         Log.i("xml", "签名是：" + sign);
         CheckpassInputstream cpinputstream = new CheckpassInputstream();
-        InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, null, sign);
+        InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, sign);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int i;
         try {

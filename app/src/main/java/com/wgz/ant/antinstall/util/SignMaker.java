@@ -13,22 +13,19 @@ import java.util.Collections;
 public class SignMaker {
 	/**
 	 * 获得加密的签名
-	 * @param name 传入的用户名，格式：username=xxx；
-	 * @param passwd 传入的密码，格式：password=xxx；
 	 * @return  返回md5加密的签名
 	 */
-	public String getsign(String name,String passwd,String setctorid){
+	public String getsign(String type,String id,String state){
 		MD5Util md5Util = new MD5Util();
 		ArrayList<String> pass = new ArrayList<String>();
-		if (setctorid==null) {
-			pass.add(name);
-			pass.add(passwd);
-			//Log.i("xml", "11111111111111"+pass.toString());
-		}if(setctorid!=null) {
-			pass.add(name);
-			pass.add(passwd);
-			pass.add(setctorid);
-			//Log.i("xml", "2222222222"+pass.toString());
+		if (state==null) {
+			pass.add(type);
+			pass.add(id);
+		}
+		if (state!=null){
+			pass.add(type);
+			pass.add(id);
+			pass.add(state);
 
 		}
 		Log.i("xml", "===========" + pass.toString());
@@ -42,6 +39,14 @@ public class SignMaker {
 		}
 		String sign1=md5Util.MD5(result);
 		Log.i("xml", "加密内容：" + result + "加密后" + sign1);
+		return sign1;
+
+
+	}
+	public String getsign(String name){
+		MD5Util md5Util = new MD5Util();
+		String sign1=md5Util.MD5(name);
+		Log.i("xml", "加密内容：" + name + "加密后" + sign1);
 		return sign1;
 
 

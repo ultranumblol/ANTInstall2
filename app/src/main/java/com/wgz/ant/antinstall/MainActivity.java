@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.umeng.update.UmengUpdateAgent;
 import com.wgz.ant.antinstall.adapter.MyFragmentPagerAdapter;
 import com.wgz.ant.antinstall.fragment.MapFragment;
 import com.wgz.ant.antinstall.fragment.MapFragment2;
@@ -45,6 +46,8 @@ public class MainActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_antinsatll);
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
        // mExplosionField = ExplosionField.attach2Window(this);
        // addListener(findViewById(R.id.root));
         initview();
