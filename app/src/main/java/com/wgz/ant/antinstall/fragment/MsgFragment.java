@@ -42,7 +42,7 @@ public class MsgFragment extends Fragment {
 
 
         msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
-                R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msglv_tv}));
+                R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msg_workerName}));
         msglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

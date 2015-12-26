@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/blue"
+        android:background="@color/title_red"
 
         android:orientation="horizontal">
 
@@ -62,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="3dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -69,25 +70,40 @@
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:id="@+id/btn_layout"
-                android:layout_marginTop="10dp"
                 >
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp"
+                    android:background="@color/title_red"
+                    android:gravity="center"
+                    android:id="@+id/Tv_wancheng"
+                    android:textColor="@color/white"
+                    android:text="确认完成"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/title_red"
+                    android:gravity="center"
+                    android:id="@+id/Tv_unwancheng"
+                    android:textColor="@color/white"
+                    android:text="未完成"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp"
                     android:text="地图查看"
-
+                    android:id="@+id/Tv_showInMap"
+                    android:background="@color/title_red"
+                    android:gravity="center"
+                    android:textColor="@color/white"
 
                     />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
 
-                    android:text="确认完成"/>
-                <Button
-                    android:layout_width="wrap_content"
 
-                    android:text="未完成"
-                    android:layout_height="wrap_content" />
 
             </LinearLayout>
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -102,7 +118,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
+                    android:background="@color/blue"
                     >
 
                     <TextView
@@ -582,17 +598,17 @@
                 android:background="@color/gray"
                 />
 
-<com.wgz.ant.antinstall.view.ScrollListView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/id_goods_list"
-    android:divider="@null"
-    android:layout_margin="3dp"
-    >
+            <com.wgz.ant.antinstall.view.ScrollListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_goods_list"
+                android:divider="@null"
+                android:layout_margin="3dp"
+                >
 
 
 
-</com.wgz.ant.antinstall.view.ScrollListView>
+            </com.wgz.ant.antinstall.view.ScrollListView>
 
 
 
@@ -606,6 +622,6 @@
 
 
 
-1
+    1
 
 </LinearLayout>

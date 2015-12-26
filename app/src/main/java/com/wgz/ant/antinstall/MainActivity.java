@@ -16,10 +16,9 @@ import com.wgz.ant.antinstall.adapter.MyFragmentPagerAdapter;
 import com.wgz.ant.antinstall.fragment.MapFragment;
 import com.wgz.ant.antinstall.fragment.MapFragment2;
 import com.wgz.ant.antinstall.fragment.MsgFragment;
-import com.wgz.ant.antinstall.fragment.NewFragment;
 import com.wgz.ant.antinstall.fragment.OrderFragment;
 import com.wgz.ant.antinstall.fragment.PersonFragment;
-import com.wgz.ant.antinstall.fragment.RecyclerFragment;
+
 import com.wgz.ant.antinstall.view.CustomViewPager;
 
 import java.util.ArrayList;
@@ -35,8 +34,6 @@ public class MainActivity extends FragmentActivity {
     private PersonFragment personFragment;
     private OrderFragment orderFragment;
     private MapFragment2 mapFragment2;
-    private NewFragment newFragment;
-    private RecyclerFragment recyclerFragment;
     //爆炸区域
    // private ExplosionField mExplosionField;
     @Override
@@ -79,7 +76,6 @@ public class MainActivity extends FragmentActivity {
         personFragment = new PersonFragment();
         mapFragment2 = new MapFragment2();
         //recyclerFragment = new RecyclerFragment();
-        newFragment = new NewFragment();
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
         bar1= (LinearLayout) findViewById(R.id.bar1);
         bar2= (LinearLayout) findViewById(R.id.bar2);
@@ -105,50 +101,34 @@ public class MainActivity extends FragmentActivity {
         mainviewpager.setCurrentItem(0);
         barimg1.setImageResource(R.drawable.bar11);
         bartv1.setTextColor(Color.WHITE);
-        bar1.setBackgroundColor(android.graphics.Color.parseColor("#0080ff"));
+        bar1.setBackgroundColor(android.graphics.Color.parseColor("#C40203"));
     }
 
 
     public  void BaronClick(View view){
-        barimg1.setImageResource(R.drawable.bar1);
-        bartv1.setTextColor(android.graphics.Color.parseColor("#0080ff"));
-        bar1.setBackgroundColor(Color.WHITE);
-        barimg2.setImageResource(R.drawable.bar2);
-        bartv2.setTextColor(android.graphics.Color.parseColor("#0080ff"));
-        bar2.setBackgroundColor(Color.WHITE);
-        barimg3.setImageResource(R.drawable.bar3);
-        bartv3.setTextColor(android.graphics.Color.parseColor("#0080ff"));
-        bar3.setBackgroundColor(Color.WHITE);
-        barimg4.setImageResource(R.drawable.bar4);
-        bartv4.setTextColor(android.graphics.Color.parseColor("#0080ff"));
-        bar4.setBackgroundColor(Color.WHITE);
+
+        bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
 
         int id = view .getId();
         switch (id){
             case  R.id.bar1:
                 mainviewpager.setCurrentItem(0);
-                barimg1.setImageResource(R.drawable.bar11);
-                bartv1.setTextColor(Color.WHITE);
-                bar1.setBackgroundColor(android.graphics.Color.parseColor("#0080ff"));
-
+                bar1.setBackgroundColor(android.graphics.Color.parseColor("#C40203"));
                 break;
             case R.id.bar2:
                 mainviewpager.setCurrentItem(1);
-                barimg2.setImageResource(R.drawable.bar22);
-                bartv2.setTextColor(Color.WHITE);
-                bar2.setBackgroundColor(android.graphics.Color.parseColor("#0080ff"));
+                bar2.setBackgroundColor(android.graphics.Color.parseColor("#C40203"));
                 break;
             case R.id.bar3:
                 mainviewpager.setCurrentItem(2);
-                barimg3.setImageResource(R.drawable.bar33);
-                bartv3.setTextColor(Color.WHITE);
-                bar3.setBackgroundColor(android.graphics.Color.parseColor("#0080ff"));
+                bar3.setBackgroundColor(android.graphics.Color.parseColor("#C40203"));
                 break;
             case R.id.bar4:
                 mainviewpager.setCurrentItem(3);
-                barimg4.setImageResource(R.drawable.bar44);
-                bartv4.setTextColor(Color.WHITE);
-                bar4.setBackgroundColor(android.graphics.Color.parseColor("#0080ff"));
+                bar4.setBackgroundColor(android.graphics.Color.parseColor("#C40203"));
                 break;
                 default:
                     break;

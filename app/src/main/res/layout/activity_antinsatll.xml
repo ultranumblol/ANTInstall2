@@ -36,6 +36,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="BaronClick"
+            android:background="@color/title_red"
             android:orientation="vertical" >
 
             <ImageView
@@ -43,17 +44,17 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/bar1" />
+                android:src="@drawable/bar11" />
 
             <TextView
                 android:id="@+id/mainbar1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dip"
-                android:textColor="@color/blue"
+                android:textColor="@color/white"
                 android:gravity="center_horizontal"
-                android:onClick="onclickMainbar"
-                android:text="业务消息"
+                android:text="消息"
+                android:layout_marginBottom="3dp"
                 android:textSize="11dip" />
         </LinearLayout>
 
@@ -63,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@color/black"
             android:onClick="BaronClick"
             android:orientation="vertical" >
 
@@ -71,7 +73,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/bar2" />
+                android:src="@drawable/bar22" />
 
             <TextView
                 android:id="@+id/mainbar2"
@@ -79,9 +81,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dip"
                 android:gravity="center_horizontal"
-                android:onClick="onclickMainbar"
-                android:text="我的订单"
-                android:textColor="@color/blue"
+                android:text="订单"
+                android:layout_marginBottom="3dp"
+                android:textColor="@color/white"
                 android:textSize="11dip" />
         </LinearLayout>
         <LinearLayout
@@ -91,6 +93,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="BaronClick"
+            android:background="@color/black"
             android:orientation="vertical" >
 
             <ImageView
@@ -98,7 +101,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/bar3" />
+                android:src="@drawable/bar33" />
 
             <TextView
                 android:id="@+id/mainbar3"
@@ -106,9 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dip"
                 android:gravity="center_horizontal"
-                android:onClick="onclickMainbar"
                 android:text="地图"
-                android:textColor="@color/blue"
+                android:layout_marginBottom="3dp"
+                android:textColor="@color/white"
                 android:textSize="11dip" />
         </LinearLayout>
         <LinearLayout
@@ -118,6 +121,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:onClick="BaronClick"
+            android:background="@color/black"
             android:orientation="vertical" >
 
             <ImageView
@@ -125,7 +129,7 @@
                 android:layout_width="25dip"
                 android:layout_height="25dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/bar4" />
+                android:src="@drawable/bar44" />
 
             <TextView
                 android:id="@+id/mainbar4"
@@ -133,9 +137,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dip"
                 android:gravity="center_horizontal"
-                android:onClick="onclickMainbar"
                 android:text="个人设置"
-                android:textColor="@color/blue"
+                android:layout_marginBottom="3dp"
+                android:textColor="@color/white"
                 android:textSize="11dip" />
         </LinearLayout>
 

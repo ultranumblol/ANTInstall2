@@ -9,11 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
+import com.wgz.ant.antinstall.adapter.OrderAdapter;
 import com.wgz.ant.antinstall.view.RefreshableView;
 
 import java.util.ArrayList;
@@ -43,10 +43,13 @@ public class OrderFragment extends Fragment {
         untuotou = (TextView) view.findViewById(R.id.untuotou_tv);
             tuotoulv = (ListView) view.findViewById(R.id.tuotou_lv);
             untuotoulv = (ListView) view.findViewById(R.id.untuotou_lv);
-        tuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData(),R.layout.order_lv_item,
+        tuotoulv.setAdapter(new OrderAdapter(testData(),getActivity()));
+        untuotoulv.setAdapter(new OrderAdapter(testData2(),getActivity()));
+
+        /*tuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData(),R.layout.order_lv_item,
                 new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));
         untuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData2(),R.layout.order_lv_item,
-                new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));
+                new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));*/
         tuotoulv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -130,8 +133,8 @@ public class OrderFragment extends Fragment {
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
         for (int i = 0 ; i<7; i++){
             Map<String, Object> map = new HashMap<String , Object>();
-            map.put("id","DJLKHDAS0"+i);
-            map.put("title","妥投业务"+i);
+            map.put("orderid","DJLKHDAS0"+i);
+            map.put("workername","妥投业务"+i);
             map.put("type","1");
             list.add(map);
 
@@ -143,8 +146,8 @@ public class OrderFragment extends Fragment {
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
         for (int i = 0 ; i<7; i++){
             Map<String, Object> map = new HashMap<String , Object>();
-            map.put("id","JFJDOFSJO"+i);
-            map.put("title","未妥投业务"+i);
+            map.put("orderid","JFJDOFSJO"+i);
+            map.put("workername","未妥投业务"+i);
             map.put("type","0");
             list.add(map);
 

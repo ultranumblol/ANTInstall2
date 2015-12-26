@@ -50,7 +50,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     //浏览路线节点相关
     Button mBtnPre = null;//上一个节点
     Button mBtnNext = null;//下一个节点
-    private Button drive,walk,transit;
+    private TextView drive,walk,transit;
     int nodeIndex = -1;//节点索引,供浏览节点时使用
     RouteLine route = null;
     OverlayManager routeOverlay = null;
@@ -94,8 +94,8 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
 
 
         walk = (Button) view.findViewById(R.id.walk);
-        transit = (Button) view.findViewById(R.id.transit);
-        drive = (Button) view.findViewById(R.id.drive);
+        transit = (TextView) view.findViewById(R.id.transit);
+        drive = (TextView) view.findViewById(R.id.drive);
         mBtnPre = (Button) view.findViewById(R.id.pre);
         mBtnNext = (Button) view.findViewById(R.id.next);
         mBtnPre.setVisibility(View.INVISIBLE);

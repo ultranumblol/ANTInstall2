@@ -1,56 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="70dp"
+    android:background="@color/msg_item_back"
+    >
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/chacha"
+
+        android:id="@+id/order_img"
+        android:layout_marginLeft="15dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:id="@+id/msg_bianhao"
+        android:layout_toRightOf="@id/order_img"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="订单编号："
+            android:text="业务编号:"
+            android:textSize="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
             android:textColor="@color/black"
-            android:layout_margin="4dp"/>
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="ZXCVAGDFA213213"
+            android:textSize="16dp"
             android:id="@+id/order_id"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/black"
-            android:layout_margin="5dp"/>
+            android:layout_marginLeft="20dp"
+            android:text="3123124124"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/order_img"
+        android:layout_below="@id/msg_bianhao"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="订单名称："
+            android:text="安装工人:"
+            android:textSize="15dp"
+
+            android:layout_gravity="center_vertical"
             android:textColor="@color/black"
-            android:layout_margin="4dp"/>
+            android:layout_marginLeft="15dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="板板板板板板"
+            android:textSize="15dp"
             android:id="@+id/order_content"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/black"
-            android:layout_margin="4dp"/>
+            android:layout_marginLeft="20dp"
+            android:text="张三"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:text="是否妥投"
+            android:text="type"
             android:id="@+id/order_type"
             />
+
     </LinearLayout>
-</LinearLayout>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/right4"/>
+
+</RelativeLayout>

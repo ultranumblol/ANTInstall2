@@ -1,10 +1,10 @@
 package com.wgz.ant.antinstall.fragment;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +33,10 @@ public class PersonFragment extends Fragment {
     private void initview(View view) {
         outLogin = (TextView) view.findViewById(R.id.login_out);
         testmap = (LinearLayout) view.findViewById(R.id.testmap);
-
-
-
         outLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("注销").setMessage("是否注销登陆，返回登陆页面？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
