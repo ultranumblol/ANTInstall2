@@ -22,7 +22,7 @@ public class MsgActivity extends Activity {
     private LinearLayout back ;
     private ListView msg_lv;
     private LinearLayout btnlay;
-    private TextView title;
+    private TextView title,wancheng,unwanchang,showinmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,18 @@ public class MsgActivity extends Activity {
 
     private void initView() {
         title = (TextView) findViewById(R.id.msg_title);
+        wancheng = (TextView) findViewById(R.id.Tv_wancheng);
+        unwanchang = (TextView) findViewById(R.id.Tv_unwancheng);
+        showinmap = (TextView) findViewById(R.id.Tv_showInMap);
+        showinmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MsgActivity.this,NewMapActivity.class);
+                startActivity(intent);
+            }
+        });
+
         Intent intent = getIntent();
         boolean flag =  intent.getBooleanExtra("order",false);
 

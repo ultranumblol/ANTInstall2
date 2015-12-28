@@ -1,6 +1,7 @@
 package com.wgz.ant.antinstall.xmlpraser;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.wgz.ant.antinstall.bean.Worker;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
@@ -31,7 +32,7 @@ public class ParserWorkerXml extends AsyncTask {
     protected Object doInBackground(Object[] params) {
         wors = new ArrayList<Map<String,Object>>();
         SignMaker sm = new SignMaker();
-        String sign= sm.getsign(username);
+        String sign= sm.getsign("username="+username);
             XmlInputStream xmlInputStream = new XmlInputStream();
         InputStream is = xmlInputStream.getStream(username,sign);
         WorkerParser wparser = new PullPraserWorker();
@@ -60,11 +61,13 @@ public class ParserWorkerXml extends AsyncTask {
     @Override
     protected void onPostExecute(Object o) {
         List<Map<String, Object>> result = (List<Map<String, Object>>) o;
+        Log.i("xml","result======="+result.size());
 
-        if(result!=null){
-            onDataFinishedListener.onDataSuccessfully(result);
-        }else{
+        if(result.size()==0){
             onDataFinishedListener.onDataFailed();
+
+        }else{
+            onDataFinishedListener.onDataSuccessfully(result);
         }
     }
 }

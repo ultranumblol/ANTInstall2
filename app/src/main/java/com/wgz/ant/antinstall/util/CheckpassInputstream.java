@@ -31,7 +31,7 @@ public class CheckpassInputstream {
         URL myURL = null;
         try {
             myURL = new URL(
-                    path);
+                    path2);
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

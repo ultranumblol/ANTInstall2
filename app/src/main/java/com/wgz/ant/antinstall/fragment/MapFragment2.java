@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -23,16 +22,13 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.route.DrivingRouteLine;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
 import com.baidu.mapapi.search.route.PlanNode;
 import com.baidu.mapapi.search.route.RoutePlanSearch;
-import com.baidu.mapapi.search.route.TransitRouteLine;
 import com.baidu.mapapi.search.route.TransitRoutePlanOption;
 import com.baidu.mapapi.search.route.TransitRouteResult;
-import com.baidu.mapapi.search.route.WalkingRouteLine;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.wgz.ant.antinstall.R;
@@ -48,8 +44,6 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         OnGetRoutePlanResultListener {
 
     //浏览路线节点相关
-    Button mBtnPre = null;//上一个节点
-    Button mBtnNext = null;//下一个节点
     private TextView drive,walk,transit;
     int nodeIndex = -1;//节点索引,供浏览节点时使用
     RouteLine route = null;
@@ -96,10 +90,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         walk = (Button) view.findViewById(R.id.walk);
         transit = (TextView) view.findViewById(R.id.transit);
         drive = (TextView) view.findViewById(R.id.drive);
-        mBtnPre = (Button) view.findViewById(R.id.pre);
-        mBtnNext = (Button) view.findViewById(R.id.next);
-        mBtnPre.setVisibility(View.INVISIBLE);
-        mBtnNext.setVisibility(View.INVISIBLE);
+
         walk.setOnClickListener(new MyonClick());
         transit.setOnClickListener(new MyonClick());
         drive.setOnClickListener(new MyonClick());
@@ -116,8 +107,6 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         public void onClick(View v) {
             //重置浏览节点的路线数据
             route = null;
-            mBtnPre.setVisibility(View.INVISIBLE);
-            mBtnNext.setVisibility(View.INVISIBLE);
             mBaidumap.clear();
             // 处理搜索按钮响应
             //设置起终点信息，对于tranist search 来说，城市名无意义
@@ -148,7 +137,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
      *
      * @param v
      */
-    public void nodeClick(View v) {
+    /*public void nodeClick(View v) {
         if (route == null ||
                 route.getAllStep() == null) {
             return;
@@ -197,7 +186,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         popupText.setText(nodeTitle);
         mBaidumap.showInfoWindow(new InfoWindow(popupText, nodeLocation, 0));
 
-    }
+    }*/
 
     /**
      * 切换路线图标，刷新地图使其生效

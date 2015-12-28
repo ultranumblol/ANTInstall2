@@ -10,22 +10,41 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="NQeo2qF7erGEYqmlvRMVf0Bm" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".LoginActivity"
+            android:launchMode="singleTask"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"
+            ></activity>
         <activity android:name=".OrderActivity"></activity>
         <activity android:name=".RoutePlanDemo"></activity>
         <activity android:name=".MsgActivity"></activity>
+        <activity android:name=".NewMapActivity"
+            android:launchMode="singleTop"
+            ></activity>
         <!--youmenupdate-->
         <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >
         </service>
+
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
+
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
@@ -40,6 +59,8 @@
     </uses-permission>
     <!-- 获取网络信息 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--百度地图-->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

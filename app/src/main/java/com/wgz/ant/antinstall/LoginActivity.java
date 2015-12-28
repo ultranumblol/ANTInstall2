@@ -31,7 +31,18 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
-        initview();
+        String flag = getsp();
+        Log.i("xml","flag=========="+flag);
+        if (flag.equals("true")){
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+        }else {
+
+            initview();
+
+        }
+
 
     }
 
@@ -56,11 +67,12 @@ public class LoginActivity extends Activity {
                     @Override
                     public void onDataSuccessfully(Object data) {
                         String checked = data.toString();
-                        //Log.i("xml", "truetruetruetruetruetruetruetrue" + checked);
+                        Log.i("xml", "truetruetruetruetruetruetruetrue" + checked);
                         Toast.makeText(LoginActivity.this, "登陆成功！", Toast.LENGTH_SHORT).show();
                         if (autologin.isChecked()) {
                             savesp();
                         }
+                        finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
 

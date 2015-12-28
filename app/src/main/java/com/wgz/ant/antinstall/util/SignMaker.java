@@ -46,7 +46,7 @@ public class SignMaker {
 	public String getsign(String name){
 		MD5Util md5Util = new MD5Util();
 		String sign1=md5Util.MD5(name);
-		Log.i("xml", "加密内容：" + name + "加密后" + sign1);
+		Log.i("xml", "加密内容：" +name + "加密后" + sign1);
 		return sign1;
 
 

@@ -1,6 +1,7 @@
 package com.wgz.ant.antinstall.xmlpraser;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.wgz.ant.antinstall.bean.Detail;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
@@ -29,7 +30,7 @@ public class ParserDetilXml extends AsyncTask {
     protected Object doInBackground(Object[] params) {
         dets = new ArrayList<Map<String,Object>>();
         SignMaker sm = new SignMaker();
-        String sign = sm.getsign(type,id,state);
+        String sign = sm.getsign("type="+type,"id="+id,"state="+state);
         XmlInputStream xmlInputStream = new XmlInputStream();
         InputStream is = xmlInputStream.getStream(type,id,state,sign);
         DetailPraser dp = new PullPraserDetail();
@@ -49,5 +50,21 @@ public class ParserDetilXml extends AsyncTask {
 
 
         return dets;
+    }
+    public void setOnDataFinishedListener(
+            OnDataFinishedListener onDataFinishedListener) {
+        this.onDataFinishedListener = onDataFinishedListener;
+    }
+    @Override
+    protected void onPostExecute(Object o) {
+        List<Map<String, Object>> result = (List<Map<String, Object>>) o;
+        Log.i("xml","result======="+result.size());
+
+        if(result.size()==0){
+            onDataFinishedListener.onDataFailed();
+
+        }else{
+            onDataFinishedListener.onDataSuccessfully(result);
+        }
     }
 }

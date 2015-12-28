@@ -29,17 +29,24 @@ public class CheckLogin extends AsyncTask {
         CheckpassInputstream cpinputstream = new CheckpassInputstream();
         InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, sign);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        int i;
-        try {
-            while ((i = is.read()) != -1) {
-                baos.write(i);
+        if(is==null){
+            String str ="请求错误！";
+            return str;
+        }else{
+
+            int i;
+            try {
+                while ((i = is.read()) != -1) {
+                    baos.write(i);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            String str = baos.toString();
+            System.out.println(str);
+            return str;
+
         }
-        String str = baos.toString();
-        System.out.println(str);
-        return str;
     }
     public void setOnDataFinishedListener(
             OnDataFinishedListener onDataFinishedListener) {

@@ -19,11 +19,11 @@ public class XmlInputStream {
         String path ="";
 
         if (state==null){
-            String path2 = "http://http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+id+"&"+type+"&sign="+sign;
+            String path2 = "http://http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+sign;
             path = path2;
         }else {
 
-            String path2 = "http://http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+id+"&"+type+"&sign="+state+"&state"+sign;
+            String path2 = "http://http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+"state="+state+"&state"+sign;
             path = path2;
         }
 
@@ -66,18 +66,17 @@ public class XmlInputStream {
     }
     public InputStream getStream(String username,String sign){
 
-        //String path = "http://hr.chinaant.com/xmlhandler.aspx?username=123&password=123&sign=5B7D1F8CEFBF1C80AEB73329C8A378A1";
-        String path ="http://wuliu.chinaant.com/AppDespacthingInfo.aspx";
-        String path2 = "http://wuliu.chinaant.com/AppDespacthingInfo.aspx?"+username+"&sign="+sign;
+
+        String path2 = "http://wuliu.chinaant.com/AppDespacthingInfo.aspx?username="+username+"&sign="+sign;
 
 
 
 
-        Log.i("xml2", "XML==path：" + path);
+        Log.i("xml2", "XML==path：" + path2);
         URL myURL = null;
         try {
             myURL = new URL(
-                    path);
+                    path2);
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

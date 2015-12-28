@@ -3,16 +3,17 @@ package com.wgz.ant.antinstall.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
-import com.wgz.ant.antinstall.adapter.MsgFmtAdapter;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.view.RefreshableView;
 import com.wgz.ant.antinstall.xmlpraser.ParserWorkerXml;
@@ -32,6 +33,7 @@ public class MsgFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.msgfragment, null);
         initview(view);
+        initData();
         return view;
     }
 
@@ -77,19 +79,20 @@ public class MsgFragment extends Fragment {
     * 初始化数据
     * */
     private void initData(){
-        ParserWorkerXml pw = new ParserWorkerXml("18669107011");
+        ParserWorkerXml pw = new ParserWorkerXml("18402887185");
         pw.execute();
         pw.setOnDataFinishedListener(new OnDataFinishedListener() {
             @Override
             public void onDataSuccessfully(Object data) {
                 List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
                 list1 = (List<Map<String, Object>>) data;
-                msglv.setAdapter(new MsgFmtAdapter(list1,getContext()));
+                Log.i("xml","list1==="+list1.toString());
+               // msglv.setAdapter(new MsgFmtAdapter(list1,getContext()));
             }
 
             @Override
             public void onDataFailed() {
-
+                Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_LONG).show();
             }
         });
 

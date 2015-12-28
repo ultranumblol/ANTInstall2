@@ -1,7 +1,9 @@
 package com.wgz.ant.antinstall.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -44,10 +46,16 @@ public class PersonFragment extends Fragment {
                         File file= new File("/data/data/"+getActivity().getPackageName().toString()+"/shared_prefs","autologin.xml");
                         if(file.exists()){
                             file.delete();
+                            SharedPreferences sp = getActivity().getSharedPreferences("autologin", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.clear().commit();
+
                             Toast.makeText(getActivity().getApplicationContext(), "注销成功！", Toast.LENGTH_LONG).show();
+                            getActivity().finish();
                             startActivity(new Intent(getActivity(), LoginActivity.class));
                         }else {
                             Toast.makeText(getActivity().getApplicationContext(), "注销成功！", Toast.LENGTH_LONG).show();
+                            getActivity().finish();
                             startActivity(new Intent(getActivity(), LoginActivity.class));
 
                         }

@@ -31,7 +31,7 @@ public class MapFragment extends Fragment{
     }
 
     private void initview(View view) {
-        mMapView = (MapView) view.findViewById(R.id.bmapView);
+        mMapView = (MapView) view.findViewById(R.id.map2);
         mBaiduMap = mMapView.getMap();
     }
     private void initMap(View view){

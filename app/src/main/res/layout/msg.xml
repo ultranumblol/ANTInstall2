@@ -72,8 +72,7 @@
                 android:id="@+id/btn_layout"
                 >
                 <TextView
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
+
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="30dp"
@@ -85,6 +84,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
                     android:background="@color/title_red"
                     android:gravity="center"
                     android:id="@+id/Tv_unwancheng"
