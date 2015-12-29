@@ -1,6 +1,8 @@
 package com.wgz.ant.antinstall.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
+import com.wgz.ant.antinstall.adapter.MsgFmtAdapter;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.view.RefreshableView;
 import com.wgz.ant.antinstall.xmlpraser.ParserWorkerXml;
@@ -43,8 +45,8 @@ public class MsgFragment extends Fragment {
 
 
 
-        msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
-                R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msg_workerName}));
+        /*msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
+                R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msg_workerName}));*/
         msglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -56,6 +58,7 @@ public class MsgFragment extends Fragment {
             public void onRefresh() {
                 try {
                     Thread.sleep(2000);
+                    initData();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -74,12 +77,18 @@ public class MsgFragment extends Fragment {
         }
         return list1;
     }
-
+    private String getsp2(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("autologin", Context.MODE_PRIVATE);
+        String flag = preferences.getString("username", "false");
+        return flag;
+    }
     /*
     * 初始化数据
     * */
     private void initData(){
-        ParserWorkerXml pw = new ParserWorkerXml("18402887185");
+        String username=getsp2();
+
+        ParserWorkerXml pw = new ParserWorkerXml(username,0);
         pw.execute();
         pw.setOnDataFinishedListener(new OnDataFinishedListener() {
             @Override
@@ -87,7 +96,7 @@ public class MsgFragment extends Fragment {
                 List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
                 list1 = (List<Map<String, Object>>) data;
                 Log.i("xml","list1==="+list1.toString());
-               // msglv.setAdapter(new MsgFmtAdapter(list1,getContext()));
+               msglv.setAdapter(new MsgFmtAdapter(list1,getContext()));
             }
 
             @Override

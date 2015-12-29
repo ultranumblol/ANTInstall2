@@ -75,6 +75,8 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     }
 
     private void initsearch() {
+        Intent intent = getIntent();
+        String endaddress = intent.getStringExtra("endAddress");
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(this);
         //重置浏览节点的路线数据
@@ -83,7 +85,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         // 处理搜索按钮响应
         //设置起终点信息，对于tranist search 来说，城市名无意义
         PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", "蚂蚁物流");
-        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都","世豪广场" );
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都","天府广场" );
         mSearch.walkingSearch((new WalkingRoutePlanOption())
                 .from(stNode)
                 .to(enNode));

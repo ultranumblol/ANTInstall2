@@ -49,6 +49,7 @@ public class MsgFmtAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.msglv_item,null);
             viewHolder.workID = (TextView) convertView.findViewById(R.id.msg_workID);
             viewHolder.workerName = (TextView) convertView.findViewById(R.id.msg_workerName);
+            viewHolder.orderID = (TextView) convertView.findViewById(R.id.order_ID);
             convertView.setTag(viewHolder);
 
 
@@ -57,15 +58,16 @@ public class MsgFmtAdapter extends BaseAdapter {
 
         }
         Map<String,Object> map = data.get(position);
-        viewHolder.workID.setText(map.get("workid").toString());
-        viewHolder.workerName.setText(map.get("workname").toString());
+        viewHolder.workID.setText(map.get("aznumber").toString());
+        viewHolder.workerName.setText(map.get("workerName").toString());
+        viewHolder.orderID.setText(map.get("workID").toString());
 
 
 
         return convertView;
     }
     class ViewHolder{
-        private TextView workID;
+        private TextView workID,orderID;
         private TextView workerName;
 
 

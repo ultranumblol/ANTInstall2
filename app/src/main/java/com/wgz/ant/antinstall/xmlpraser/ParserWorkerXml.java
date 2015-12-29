@@ -22,26 +22,28 @@ public class ParserWorkerXml extends AsyncTask {
     private List<Map<String,Object>> wors;
     OnDataFinishedListener onDataFinishedListener;
     private String username;
-
-    public ParserWorkerXml(String username) {
+    private int state;
+    public ParserWorkerXml(String username,int state) {
         super();
         this.username = username;
+        this.state=state;
     }
 
     @Override
     protected Object doInBackground(Object[] params) {
         wors = new ArrayList<Map<String,Object>>();
         SignMaker sm = new SignMaker();
-        String sign= sm.getsign("username="+username);
+        String sign= sm.getsign("username="+username,state);
             XmlInputStream xmlInputStream = new XmlInputStream();
-        InputStream is = xmlInputStream.getStream(username,sign);
+        InputStream is = xmlInputStream.getStream(username,state+"",sign);
         WorkerParser wparser = new PullPraserWorker();
         try {
             mWorker = wparser.parse(is);
             for (Worker worker:mWorker){
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("workername",worker.getWorkername());
-                map.put("wordID",worker.getWorkerID());
+                map.put("workID",worker.getWorkID());
+                map.put("aznumber",worker.getAzdispatchingnumber());
+                map.put("workerName",worker.getWorkerName());
                 wors.add(map);
 
             }

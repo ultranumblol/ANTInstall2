@@ -35,21 +35,21 @@ public class PullPraserWorker implements WorkerParser {
                     if (pullParser.getName().equals("Table")) {  //判断开始标签元素
                         workers = new Worker();
                     }
-
-                    else if (pullParser.getName().equals("username")) {
-                        event=pullParser.next();//让解析器指向id属性的值
-
-                        workers.setWorkername(pullParser.getText());
-
-                    }
-                    else if (pullParser.getName().equals("userid")) {
-                        event=pullParser.next();
-                        workers.setWorkerID(pullParser.getText());
-                    }
                     else if (pullParser.getName().equals("id")) {
                         event=pullParser.next();
-                        workers.setWorkNum(pullParser.getText());
+                        workers.setWorkID(pullParser.getText());
                     }
+                    else if (pullParser.getName().equals("aznumber")) {
+                        event=pullParser.next();//让解析器指向id属性的值
+
+                        workers.setAzdispatchingnumber(pullParser.getText());
+
+                    }
+                    else if (pullParser.getName().equals("perterlist")) {
+                        event=pullParser.next();
+                        workers.setWorkerName(pullParser.getText());
+                    }
+
 
                     break;
                 // 判断当前事件是否为标签元素结束事件

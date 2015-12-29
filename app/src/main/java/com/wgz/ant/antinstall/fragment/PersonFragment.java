@@ -25,16 +25,25 @@ import java.io.File;
 public class PersonFragment extends Fragment {
     private TextView outLogin;
     private LinearLayout testmap;
+    private TextView username;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.personfragment,null);
         initview(view);
         return  view;
     }
-
+    private String getsp2(){
+        SharedPreferences preferences =getActivity(). getSharedPreferences("autologin", Context.MODE_PRIVATE);
+        String flag = preferences.getString("username", "false");
+        return flag;
+    }
     private void initview(View view) {
+
+
+        username = (TextView) view.findViewById(R.id.login_username);
         outLogin = (TextView) view.findViewById(R.id.login_out);
         testmap = (LinearLayout) view.findViewById(R.id.testmap);
+        username.setText(getsp2());
         outLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +58,9 @@ public class PersonFragment extends Fragment {
                             SharedPreferences sp = getActivity().getSharedPreferences("autologin", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.clear().commit();
+                            SharedPreferences sp2 = getActivity().getSharedPreferences("username", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor2 = sp2.edit();
+                            editor2.clear().commit();
 
                             Toast.makeText(getActivity().getApplicationContext(), "注销成功！", Toast.LENGTH_LONG).show();
                             getActivity().finish();

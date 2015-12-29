@@ -41,6 +41,7 @@
                 android:textColor="@color/black"
                 android:text="18669107011"
                 android:textSize="17dp"
+                android:id="@+id/login_username"
                 android:layout_marginTop="5dip"/>
             <TextView
                 android:layout_width="match_parent"

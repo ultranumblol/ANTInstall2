@@ -32,10 +32,16 @@ public class LoginActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
         String flag = getsp();
+        String username = getsp2();
         Log.i("xml","flag=========="+flag);
         if (flag.equals("true")){
+            Intent in = new Intent();
+            in.setClass(LoginActivity.this, MainActivity.class);
+            in.putExtra("username",username);
+
+
             finish();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(in);
 
         }else {
 
@@ -71,6 +77,7 @@ public class LoginActivity extends Activity {
                         Toast.makeText(LoginActivity.this, "登陆成功！", Toast.LENGTH_SHORT).show();
                         if (autologin.isChecked()) {
                             savesp();
+                            savesp2();
                         }
                         finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -93,9 +100,22 @@ public class LoginActivity extends Activity {
         editor.commit();
 
     }
+    private void savesp2(){
+        SharedPreferences preferences = getSharedPreferences("autologin", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor  = preferences.edit();
+        editor.putString("username", login_name.getText().toString());
+        editor.commit();
+
+    }
+
     private String getsp(){
         SharedPreferences preferences = getSharedPreferences("autologin", Context.MODE_PRIVATE);
         String flag = preferences.getString("autologin", "false");
+        return flag;
+    }
+    private String getsp2(){
+        SharedPreferences preferences = getSharedPreferences("autologin", Context.MODE_PRIVATE);
+        String flag = preferences.getString("username", "false");
         return flag;
     }
     /**

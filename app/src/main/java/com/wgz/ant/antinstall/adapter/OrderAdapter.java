@@ -20,10 +20,12 @@ public class OrderAdapter extends BaseAdapter {
     private List<Map<String,Object>> data;
     private LayoutInflater layoutInflater;
     private Context context;
+    private int state;
 
-    public OrderAdapter(List<Map<String, Object>> data, Context context) {
+    public OrderAdapter(List<Map<String, Object>> data, Context context,int state) {
         this.data = data;
         this.context = context;
+        this.state = state;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -50,7 +52,7 @@ public class OrderAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.order_lv_item,null);
             holder.orderID = (TextView) convertView.findViewById(R.id.order_id);
             holder.orderimg = (ImageView) convertView.findViewById(R.id.order_img);
-            holder.ordertype = (TextView) convertView.findViewById(R.id.order_type);
+            holder.workID = (TextView) convertView.findViewById(R.id.work_id);
             holder.workername = (TextView) convertView.findViewById(R.id.order_content);
             convertView.setTag(holder);
 
@@ -62,13 +64,13 @@ public class OrderAdapter extends BaseAdapter {
         Map<String,Object> map = data.get(position);
 
 
-        holder.orderID.setText(map.get("orderid").toString());
-        holder.workername.setText(map.get("workername").toString());
-        holder.ordertype.setText(map.get("type").toString());
-        if (map.get("type").toString().equals("1")){
+        holder.orderID.setText(map.get("aznumber").toString());
+        holder.workername.setText(map.get("workerName").toString());
+        holder.workID.setText(map.get("workID").toString());
+        if (state==1){
             holder.orderimg.setImageResource(R.drawable.gougou);
 
-        }if (map.get("type").toString().equals("0")){
+        }if (state==2){
             holder.orderimg.setImageResource(R.drawable.chacha);
 
         }
@@ -80,7 +82,7 @@ public class OrderAdapter extends BaseAdapter {
         private TextView orderID;
         private TextView workername;
         private ImageView orderimg;
-        private TextView ordertype;
+        private TextView workID;
 
 
 

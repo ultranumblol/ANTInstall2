@@ -19,11 +19,11 @@ public class XmlInputStream {
         String path ="";
 
         if (state==null){
-            String path2 = "http://http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+sign;
+            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+sign;
             path = path2;
         }else {
 
-            String path2 = "http://http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+"state="+state+"&state"+sign;
+            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+"state="+state+"&state"+sign;
             path = path2;
         }
 
@@ -64,10 +64,10 @@ public class XmlInputStream {
         return inStream;
 
     }
-    public InputStream getStream(String username,String sign){
+    public InputStream getStream(String username,String state,String sign){
 
 
-        String path2 = "http://wuliu.chinaant.com/AppDespacthingInfo.aspx?username="+username+"&sign="+sign;
+        String path2 = "http://wuliu.chinaant.com/AppDespacthingInfo.aspx?username="+username+"&state="+state+"&sign="+sign;
 
 
 

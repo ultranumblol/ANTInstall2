@@ -12,6 +12,33 @@ public class Detail {
     private String phone;
     private String address;
     private String date;
+    private String aznumber;
+    private String azreservation;
+    private String delivery;
+
+    public void setAzreservation(String azreservation) {
+        this.azreservation = azreservation;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
+
+    public String getAzreservation() {
+        return azreservation;
+    }
+
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setAznumber(String aznumber) {
+        this.aznumber = aznumber;
+    }
+
+    public String getAznumber() {
+        return aznumber;
+    }
 
     public void setGoodname(String goodname) {
         this.goodname = goodname;

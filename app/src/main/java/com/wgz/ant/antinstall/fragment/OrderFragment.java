@@ -1,9 +1,12 @@
 package com.wgz.ant.antinstall.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +17,11 @@ import android.widget.TextView;
 import com.wgz.ant.antinstall.MsgActivity;
 import com.wgz.ant.antinstall.R;
 import com.wgz.ant.antinstall.adapter.OrderAdapter;
+import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.view.RefreshableView;
+import com.wgz.ant.antinstall.xmlpraser.ParserWorkerXml;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +45,12 @@ public class OrderFragment extends Fragment {
         refreshableView3 = (RefreshableView) view.findViewById(R.id.refreshable_view3);
         tuotou = (TextView) view.findViewById(R.id.tuotou_tv);
         untuotou = (TextView) view.findViewById(R.id.untuotou_tv);
-            tuotoulv = (ListView) view.findViewById(R.id.tuotou_lv);
-            untuotoulv = (ListView) view.findViewById(R.id.untuotou_lv);
-        tuotoulv.setAdapter(new OrderAdapter(testData(),getActivity()));
-        untuotoulv.setAdapter(new OrderAdapter(testData2(),getActivity()));
-
+        tuotoulv = (ListView) view.findViewById(R.id.tuotou_lv);
+        untuotoulv = (ListView) view.findViewById(R.id.untuotou_lv);
+        //tuotoulv.setAdapter(new OrderAdapter(testData(),getActivity()));
+        //untuotoulv.setAdapter(new OrderAdapter(testData2(),getActivity()));
+        initData();
+        initData2();
         /*tuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData(),R.layout.order_lv_item,
                 new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));
         untuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData2(),R.layout.order_lv_item,
@@ -53,11 +58,11 @@ public class OrderFragment extends Fragment {
         tuotoulv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView orderId = (TextView) view.findViewById(R.id.order_id);
-                TextView orderType = (TextView) view.findViewById(R.id.order_type);
-                Intent intent = new Intent();
-                intent.putExtra("order",true);
+                TextView workid = (TextView) view.findViewById(R.id.work_id);
 
+                Intent intent = new Intent();
+                intent.putExtra("workID",workid.getText().toString());
+                intent.putExtra("order",true);
                 intent.setClass(getActivity(),MsgActivity.class);
                 startActivity(intent);
 
@@ -66,10 +71,12 @@ public class OrderFragment extends Fragment {
         untuotoulv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView orderId = (TextView) view.findViewById(R.id.order_id);
-                TextView orderType = (TextView) view.findViewById(R.id.order_type);
+                TextView workid = (TextView) view.findViewById(R.id.work_id);
+
                 Intent intent = new Intent();
                 intent.putExtra("order",true);
+                intent.putExtra("workID",workid.getText().toString());
+
                 intent.setClass(getActivity(),MsgActivity.class);
                 startActivity(intent);
             }
@@ -128,31 +135,57 @@ public class OrderFragment extends Fragment {
             }
         });
     }
-
-    private List<Map<String,Object>> testData(){
-        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
-        for (int i = 0 ; i<7; i++){
-            Map<String, Object> map = new HashMap<String , Object>();
-            map.put("orderid","DJLKHDAS0"+i);
-            map.put("workername","妥投业务"+i);
-            map.put("type","1");
-            list.add(map);
-
-        }
-
-      return  list;
+    private String getsp2(){
+        SharedPreferences preferences = getActivity().getSharedPreferences("autologin", Context.MODE_PRIVATE);
+        String flag = preferences.getString("username", "false");
+        return flag;
     }
-    private List<Map<String,Object>> testData2(){
-        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
-        for (int i = 0 ; i<7; i++){
-            Map<String, Object> map = new HashMap<String , Object>();
-            map.put("orderid","JFJDOFSJO"+i);
-            map.put("workername","未妥投业务"+i);
-            map.put("type","0");
-            list.add(map);
 
-        }
+    /*
+    * 初始化数据
+    * */
+    private void initData(){
+        ParserWorkerXml pw = new ParserWorkerXml(getsp2(),1);
+        pw.execute();
+        pw.setOnDataFinishedListener(new OnDataFinishedListener() {
+            @Override
+            public void onDataSuccessfully(Object data) {
+                List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
+                list1 = (List<Map<String, Object>>) data;
+                Log.i("xml","list1111==="+list1.toString());
+                tuotoulv.setAdapter(new OrderAdapter(list1,getActivity(),1));
+            }
 
-        return  list;
+            @Override
+            public void onDataFailed() {
+                //Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
     }
+    private void initData2(){
+        ParserWorkerXml pw = new ParserWorkerXml(getsp2(),2);
+        pw.execute();
+        pw.setOnDataFinishedListener(new OnDataFinishedListener() {
+            @Override
+            public void onDataSuccessfully(Object data) {
+                List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
+                list1 = (List<Map<String, Object>>) data;
+                Log.i("xml","list222==="+list1.toString());
+                untuotoulv.setAdapter(new OrderAdapter(list1,getActivity(),2));
+            }
+
+            @Override
+            public void onDataFailed() {
+                // Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+    }
+
+
 }

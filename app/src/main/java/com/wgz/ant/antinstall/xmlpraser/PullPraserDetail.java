@@ -16,8 +16,8 @@ import java.util.List;
 public class PullPraserDetail implements DetailPraser {
     @Override
     public List<Detail> parse(InputStream is) throws Exception {
-        List<Detail> snews = null;
-        Detail goods = null;
+        List<Detail> details = null;
+        Detail datails = null;
         // 由android.util.Xml创建一个XmlPullParser实例
         XmlPullParser pullParser = Xml.newPullParser();
         // 设置输入流 并指明编码方式
@@ -28,39 +28,63 @@ public class PullPraserDetail implements DetailPraser {
             switch (event) {
                 // 判断当前事件是否为文档开始事件
                 case XmlPullParser.START_DOCUMENT:
-                    snews = new ArrayList<Detail>();  //初始化Goods集合
+                    details = new ArrayList<Detail>();  //初始化Goods集合
                     break;
                 // 判断当前事件是否为标签元素开始事件
                 case XmlPullParser.START_TAG:
                     if (pullParser.getName().equals("Table")) {  //判断开始标签元素
-                        goods = new Detail();
+                        datails = new Detail();
                     }
-
+                    else if (pullParser.getName().equals("aznumber")) {
+                        event=pullParser.next();//让解析器指向id属性的值
+                        datails.setAznumber(pullParser.getText());
+                    }
                     else if (pullParser.getName().equals("name")) {
                         event=pullParser.next();//让解析器指向id属性的值
 
-                        goods.setName(pullParser.getText());
+                        datails.setName(pullParser.getText());
 
                     }
-                    else if (pullParser.getName().equals("goodsmoney")) {
+                    else if (pullParser.getName().equals("phone1")) {
                         event=pullParser.next();//让解析器指向pid属性的值
-                        goods.setPrice(pullParser.getText());
+                        datails.setPhone(pullParser.getText());
                     }
-                    else if (pullParser.getName().equals("servicestyle")) {
+                    else if (pullParser.getName().equals("address")) {
                         event=pullParser.next();
-                        goods.setType(pullParser.getText());
+                        datails.setAddress(pullParser.getText());
+                    }
+                    else if (pullParser.getName().equals("price")) {
+                        event=pullParser.next();
+                        datails.setPrice(pullParser.getText());
+                    }
+                    else if (pullParser.getName().equals("name1")) {
+                        event=pullParser.next();
+                        datails.setGoodname(pullParser.getText());
+                    }
+                    else if (pullParser.getName().equals("goodsmoney")) {
+                        event=pullParser.next();
+                        datails.setGoodsmoeny(pullParser.getText());
                     }
                     else if (pullParser.getName().equals("quantity")) {
                         event=pullParser.next();
-                        goods.setCount(pullParser.getText());
+                        datails.setCount(pullParser.getText());
                     }
+                    else if (pullParser.getName().equals("delivery")) {
+                        event=pullParser.next();
+                        datails.setDelivery(pullParser.getText());
+                    }
+                    else if (pullParser.getName().equals("azreservation")) {
+                        event=pullParser.next();
+                        datails.setAzreservation(pullParser.getText());
+                    }
+
 
                     break;
                 // 判断当前事件是否为标签元素结束事件
                 case XmlPullParser.END_TAG:
                     if (pullParser.getName().equals("Table")) {  // 判断结束标签元素
-                        snews.add(goods);
-                        goods = null;
+                        details.add(datails);
+                        datails = null;
                     }
                     break;
 
@@ -69,6 +93,6 @@ public class PullPraserDetail implements DetailPraser {
             event = pullParser.next();
         }
 
-        return snews;
+        return details;
     }
 }
