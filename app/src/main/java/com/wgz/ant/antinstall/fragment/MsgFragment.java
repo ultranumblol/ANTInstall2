@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wgz.ant.antinstall.MsgActivity;
@@ -31,6 +32,7 @@ import java.util.Map;
 public class MsgFragment extends Fragment {
     RefreshableView refreshableView;
     private ListView msglv;
+    private  List<Map<String, Object>> listDATE = new ArrayList<Map<String,Object>>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.msgfragment, null);
@@ -42,15 +44,16 @@ public class MsgFragment extends Fragment {
     private void initview(View view) {
         msglv = (ListView) view .findViewById(R.id.msg_lv);
         refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
-
-
-
-        /*msglv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),CeshiDATA(),
-                R.layout.msglv_item,new String[]{"name"},new int[]{R.id.msg_workerName}));*/
         msglv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), MsgActivity.class));
+
+                TextView workid = (TextView) view.findViewById(R.id.order_ID);
+                Intent intent = new Intent();
+                intent.putExtra("workID",workid.getText().toString());
+                intent.setClass(getActivity(),MsgActivity.class);
+
+                startActivityForResult(intent,0);
             }
         });
         refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
@@ -77,6 +80,15 @@ public class MsgFragment extends Fragment {
         }
         return list1;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        String result = data.getExtras().getString("result");
+        if(result.equals("该刷新了")){
+           initData();
+        }
+    }
+
     private String getsp2(){
         SharedPreferences preferences = getActivity().getSharedPreferences("autologin", Context.MODE_PRIVATE);
         String flag = preferences.getString("username", "false");
@@ -101,7 +113,8 @@ public class MsgFragment extends Fragment {
 
             @Override
             public void onDataFailed() {
-                Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_LONG).show();
+                msglv.setAdapter(new MsgFmtAdapter(listDATE,getContext()));
+                Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_SHORT).show();
             }
         });
 

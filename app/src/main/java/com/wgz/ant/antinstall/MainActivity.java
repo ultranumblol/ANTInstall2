@@ -1,5 +1,6 @@
 package com.wgz.ant.antinstall;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -68,14 +69,21 @@ public class MainActivity extends FragmentActivity {
             });
         }
     }*/
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String result = data.getExtras().getString("result");
+        Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(0).getId());
+        f.onActivityResult(requestCode, resultCode, data);
+        Fragment f2 = getSupportFragmentManager().findFragmentById(fragments.get(1).getId());
+        f2.onActivityResult(requestCode, resultCode, data);
 
+    }
     public void initview() {
          msgFragment = new MsgFragment();
         mapFragment = new MapFragment();
         orderFragment = new OrderFragment();
         personFragment = new PersonFragment();
         mapFragment2 = new MapFragment2();
-        //recyclerFragment = new RecyclerFragment();
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
         bar1= (LinearLayout) findViewById(R.id.bar1);
         bar2= (LinearLayout) findViewById(R.id.bar2);
@@ -92,11 +100,8 @@ public class MainActivity extends FragmentActivity {
         fragments = new ArrayList<Fragment>();
         fragments.add(msgFragment);
         fragments.add(orderFragment);
-        //fragments.add(mapFragment);
         fragments.add(mapFragment2);
         fragments.add(personFragment);
-        //fragments.add(recyclerFragment);
-        //fragments.add(newFragment);
         mainviewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
         mainviewpager.setCurrentItem(0);
         barimg1.setImageResource(R.drawable.bar11);

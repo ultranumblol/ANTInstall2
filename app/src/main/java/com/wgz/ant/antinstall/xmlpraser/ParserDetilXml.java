@@ -8,6 +8,7 @@ import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.util.SignMaker;
 import com.wgz.ant.antinstall.util.XmlInputStream;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,12 +24,14 @@ public class ParserDetilXml extends AsyncTask {
     OnDataFinishedListener onDataFinishedListener;
     private String type;
     private String id;
-    private String state;
+    private String state,username,remark;
 
-    public ParserDetilXml(String type, String id, String state) {
+    public ParserDetilXml(String type, String id, String state,String username,String remark) {
         this.type = type;
         this.id = id;
         this.state = state;
+        this.username = username;
+        this.remark =remark;
     }
 
     @Override
@@ -42,12 +45,20 @@ public class ParserDetilXml extends AsyncTask {
             String sign = sm.getsign("type="+type,"id="+id);
             sign1=sign;
 
-        }else {
+        }if(username==null&&state!=null) {
             String sign = sm.getsign("type="+type,"id="+id,"state="+state);
             sign1=sign;
         }
+        if (username!=null){
+            String sign = sm.getsign("type="+type,"id="+id,"state="+state,"username="+username,"remark="+remark);
+            sign1=sign;
+
+        }
         XmlInputStream xmlInputStream = new XmlInputStream();
-        InputStream is = xmlInputStream.getStream(type,id,state,sign1);
+        InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
         DetailPraser dp = new PullPraserDetail();
         try {
             mdetail = dp.parse(is);

@@ -14,17 +14,21 @@ import java.net.URL;
  * Created by qwerr on 2015/11/27.
  */
 public class XmlInputStream {
-    public InputStream getStream(String type,String id,String state,String sign){
+    public InputStream getStream(String type,String id,String state,String sign,String username,String remark){
 
         String path ="";
 
         if (state==null){
             String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+sign;
             path = path2;
-        }else {
+        }if(username==null&&state!=null)  {
 
-            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&sign="+"state="+state+"&state"+sign;
+            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&sign="+sign;
             path = path2;
+        }if(username!=null){
+            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&username="+username+"&remark="+remark+"&sign="+sign;
+            path = path2;
+
         }
 
         Log.i("xml2", "XML==path：" + path);

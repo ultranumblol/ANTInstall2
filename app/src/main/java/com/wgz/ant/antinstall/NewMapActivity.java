@@ -51,6 +51,8 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     private  MyLocationListener mLocationlistener;
     private  boolean isFirstin = true;
     private double mLatitude,mLongtitude;
+    private Context context;
+    private String myLocation;
     //路线相关
     RouteLine route = null;
     OverlayManager routeOverlay = null;
@@ -62,6 +64,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapfragment);
+        this.context = this;
         initview();
 
         if (isOPen(this)){
@@ -85,7 +88,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         // 处理搜索按钮响应
         //设置起终点信息，对于tranist search 来说，城市名无意义
         PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", "蚂蚁物流");
-        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都","天府广场" );
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都",endaddress );
         mSearch.walkingSearch((new WalkingRoutePlanOption())
                 .from(stNode)
                 .to(enNode));
@@ -165,7 +168,6 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     //定位到我的位置
     private void CenterToMyLocation() {
         LatLng latLng = new LatLng(mLatitude,mLongtitude);
-        //LatLng latLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
         MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
         mBaiduMap.animateMapStatus(msu);
     }
@@ -250,23 +252,25 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
                     .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude()).build();
 
-                    mBaiduMap.setMyLocationData(data);
-            mLatitude = 30.67;
-            mLongtitude = 104.06;
+            mBaiduMap.setMyLocationData(data);
+           // mLatitude = 30.67;
+           // mLongtitude = 104.06;
+            mLatitude = bdLocation.getLatitude();
+            mLongtitude =bdLocation.getLongitude();
+            myLocation = bdLocation.getAddrStr();
+            if (isFirstin){
+                //坐标
+               // LatLng latLng = new LatLng(30.67,104.06);
+                LatLng latLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
+                MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+                mBaiduMap.animateMapStatus(msu);
+                isFirstin = false;
+
+                //Toast.makeText(context,bdLocation.getAddrStr(),Toast.LENGTH_SHORT).show();
 
 
-                    if (isFirstin){
-                        //坐标
-                        LatLng latLng = new LatLng(30.67,104.06);
-                       //LatLng latLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
-                        MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
-                        mBaiduMap.animateMapStatus(msu);
-                        isFirstin = false;
 
-
-
-
-                    }
+            }
 
         }
     }

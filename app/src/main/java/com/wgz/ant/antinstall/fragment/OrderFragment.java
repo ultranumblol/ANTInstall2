@@ -32,7 +32,7 @@ public class OrderFragment extends Fragment {
     private TextView tuotou,untuotou;
     private ListView tuotoulv,untuotoulv;
     private RefreshableView refreshableView2,refreshableView3;
-
+private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.orderfragment,null);
@@ -64,7 +64,7 @@ public class OrderFragment extends Fragment {
                 intent.putExtra("workID",workid.getText().toString());
                 intent.putExtra("order",true);
                 intent.setClass(getActivity(),MsgActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,0);
 
             }
         });
@@ -78,7 +78,7 @@ public class OrderFragment extends Fragment {
                 intent.putExtra("workID",workid.getText().toString());
 
                 intent.setClass(getActivity(),MsgActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
 
@@ -89,7 +89,8 @@ public class OrderFragment extends Fragment {
             @Override
             public void onRefresh() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
+                    initData2();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -101,7 +102,8 @@ public class OrderFragment extends Fragment {
             @Override
             public void onRefresh() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
+                    initData();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -140,7 +142,15 @@ public class OrderFragment extends Fragment {
         String flag = preferences.getString("username", "false");
         return flag;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        String result = data.getExtras().getString("result");
+        if(result.equals("该刷新了")){
+           initData2();
+            initData();
+        }
+    }
     /*
     * 初始化数据
     * */
@@ -158,7 +168,7 @@ public class OrderFragment extends Fragment {
 
             @Override
             public void onDataFailed() {
-                //Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_LONG).show();
+                tuotoulv.setAdapter(new OrderAdapter(listDATA,getActivity(),1));
             }
         });
 
@@ -179,7 +189,8 @@ public class OrderFragment extends Fragment {
 
             @Override
             public void onDataFailed() {
-                // Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_LONG).show();
+                untuotoulv.setAdapter(new OrderAdapter(listDATA,getActivity(),2));
+
             }
         });
 

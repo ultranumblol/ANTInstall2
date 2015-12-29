@@ -46,7 +46,7 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:id="@+id/untuotou_lv"></ListView>
 
@@ -60,7 +60,7 @@
         >
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
 
             android:id="@+id/tuotou_lv"></ListView>

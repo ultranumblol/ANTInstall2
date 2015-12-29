@@ -2,8 +2,10 @@ package com.wgz.ant.antinstall;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,12 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.xmlpraser.ParserDetilXml;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +33,7 @@ public class MsgActivity extends Activity {
     private LinearLayout btnlay;
     private TextView title,wancheng,unwanchang,showinmap;
     private TextView orderID,name,phone,servType,address,money,delivery,azreservation;
+    private String workID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +48,9 @@ public class MsgActivity extends Activity {
     private void initData() {
         Intent intent = getIntent();
 
-        String workID = intent.getStringExtra("workID");
+        workID = intent.getStringExtra("workID");
 
-        ParserDetilXml pd = new ParserDetilXml("get",workID,null);
+        ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null);
         pd.execute();
         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
             @Override
@@ -81,7 +84,22 @@ public class MsgActivity extends Activity {
         });
 
     }
+    @Override
+    public void finish() {
+        //数据是使用Intent返回
+        Intent intent = new Intent();
+        //把返回数据存入Intent
+        intent.putExtra("result", "该刷新了");
+        //设置返回数据
+        setResult(RESULT_OK, intent);
+        super.finish();
+    }
 
+    private String getsp2(){
+        SharedPreferences preferences = getSharedPreferences("autologin", Context.MODE_PRIVATE);
+        String flag = preferences.getString("username", "????");
+        return flag;
+    }
     private void initView() {
         orderID = (TextView) findViewById(R.id.id_order_id);
         name = (TextView) findViewById(R.id.id_order_name);
@@ -114,6 +132,23 @@ public class MsgActivity extends Activity {
                 builder.setTitle("确认").setMessage("请确认完成").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null);
+                        pd.execute();
+                        pd.setOnDataFinishedListener(new OnDataFinishedListener() {
+                            @Override
+                            public void onDataSuccessfully(Object data) {
+                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
+                                MsgActivity.this.finish();
+                            }
+
+                            @Override
+                            public void onDataFailed() {
+                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
+                                MsgActivity.this.finish();
+                            }
+                        });
+
+
 
                     }
                 }).setNegativeButton("取消",null);
@@ -123,19 +158,7 @@ public class MsgActivity extends Activity {
 
 
 
-                ParserDetilXml pd = new ParserDetilXml("set","001","1");
-                pd.execute();
-                pd.setOnDataFinishedListener(new OnDataFinishedListener() {
-                    @Override
-                    public void onDataSuccessfully(Object data) {
 
-                    }
-
-                    @Override
-                    public void onDataFailed() {
-
-                    }
-                });
 
             }
         });
@@ -154,6 +177,21 @@ public class MsgActivity extends Activity {
 
                         String reason = inputServer.getText().toString();
 
+                        ParserDetilXml pd = new ParserDetilXml("set",workID,"2",getsp2(),reason);
+                        pd.execute();
+                        pd.setOnDataFinishedListener(new OnDataFinishedListener() {
+                            @Override
+                            public void onDataSuccessfully(Object data) {
+                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+
+                            @Override
+                            public void onDataFailed() {
+                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        });
 
 
                     }
@@ -164,19 +202,7 @@ public class MsgActivity extends Activity {
 
 
 
-            ParserDetilXml pd = new ParserDetilXml("set","001","2");
-                pd.execute();
-                pd.setOnDataFinishedListener(new OnDataFinishedListener() {
-                    @Override
-                    public void onDataSuccessfully(Object data) {
 
-                    }
-
-                    @Override
-                    public void onDataFailed() {
-
-                    }
-                });
             }
         });
 
@@ -204,21 +230,5 @@ public class MsgActivity extends Activity {
                 finish();
             }
         });
-
-
-    }
-
-    private List<Map<String,Object>> CeshiDATA() {
-        List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
-        for (int i = 0;i<8;i++){
-            Map<String,Object> map = new HashMap<>();
-            map.put("name","货物"+(i+1));
-            map.put("count","1");
-            map.put("type","家具组装");
-            map.put("money",""+(int)(Math.random()*500));
-            list1.add(map);
-
-        }
-        return list1;
     }
 }
