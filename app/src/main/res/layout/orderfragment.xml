@@ -5,7 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/title_red"
+        android:background="@color/title_blue"
         android:gravity="center"
         android:orientation="horizontal">
         <LinearLayout
@@ -20,18 +20,18 @@
                 android:gravity="center"
                 android:layout_height="30dp"
                 android:text="已妥投"
-                android:textColor="@color/red"
+                android:textColor="@color/white"
                 android:id="@+id/tuotou_tv"
-                android:background="@drawable/btn_red5_selector_left"
+                android:background="@drawable/bordergray_table_leftradius_ontrans_pressed"
                 android:textSize="13dp"/>
             <TextView
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:textSize="13dp"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:id="@+id/untuotou_tv"
-                android:background="@drawable/bordergray_table_rightradius_ontrans_pressed"
+                android:background="@drawable/bordergray_table_rightradius_ontrans"
                 android:text="未妥投"/>
         </LinearLayout>
 
@@ -41,6 +41,7 @@
     <com.wgz.ant.antinstall.view.RefreshableView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:id="@+id/refreshable_view2">
 
 
@@ -56,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/refreshable_view3"
-        android:visibility="gone"
+        android:visibility="visible"
         >
         <ListView
             android:layout_width="match_parent"

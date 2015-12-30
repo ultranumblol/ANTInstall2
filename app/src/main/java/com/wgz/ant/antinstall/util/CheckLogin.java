@@ -28,6 +28,7 @@ public class CheckLogin extends AsyncTask {
         Log.i("xml", "签名是：" + sign);
         CheckpassInputstream cpinputstream = new CheckpassInputstream();
         InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, sign);
+        //Log.i("xml", "isisisisis：" + is.toString());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         if(is==null){
             String str ="请求错误！";

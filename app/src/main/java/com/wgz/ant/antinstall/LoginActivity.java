@@ -77,8 +77,8 @@ public class LoginActivity extends Activity {
                         Toast.makeText(LoginActivity.this, "登陆成功！", Toast.LENGTH_SHORT).show();
                         if (autologin.isChecked()) {
                             savesp();
-                            savesp2();
                         }
+                        savesp2();
                         finish();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }

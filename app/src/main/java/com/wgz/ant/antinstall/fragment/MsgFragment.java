@@ -22,7 +22,6 @@ import com.wgz.ant.antinstall.view.RefreshableView;
 import com.wgz.ant.antinstall.xmlpraser.ParserWorkerXml;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,9 +37,20 @@ public class MsgFragment extends Fragment {
         View view = inflater.inflate(R.layout.msgfragment, null);
         initview(view);
         initData();
+
         return view;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("xml","msggragment执行了回调刷新方法");
+        initData();
+        String result = data.getExtras().getString("result");
+        if(result.equals("该刷新了")){
 
+            Log.i("xml","msggragment执行了回调刷新方法");
+            initData();
+        }
+    }
     private void initview(View view) {
         msglv = (ListView) view .findViewById(R.id.msg_lv);
         refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
@@ -70,24 +80,6 @@ public class MsgFragment extends Fragment {
         },0);
 
     }
-    private List<Map<String,Object>> CeshiDATA() {
-         List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
-        for (int i = 0;i<5;i++){
-            Map<String,Object> map = new HashMap<>();
-            map.put("name","张"+(i+1));
-            list1.add(map);
-
-        }
-        return list1;
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        String result = data.getExtras().getString("result");
-        if(result.equals("该刷新了")){
-           initData();
-        }
-    }
 
     private String getsp2(){
         SharedPreferences preferences = getActivity().getSharedPreferences("autologin", Context.MODE_PRIVATE);
@@ -114,7 +106,7 @@ public class MsgFragment extends Fragment {
             @Override
             public void onDataFailed() {
                 msglv.setAdapter(new MsgFmtAdapter(listDATE,getContext()));
-                Toast.makeText(getActivity(),"没有相关数据!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"没有相关业务!",Toast.LENGTH_SHORT).show();
             }
         });
 

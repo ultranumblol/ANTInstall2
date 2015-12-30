@@ -16,5 +16,7 @@
     <color name="red2">#ff5151</color>
     <color name="barbllue">#0000c6</color>
     <color name="title_red">#C40203</color>
+    <color name="title_blue">#00A1E9</color>
     <color name="msg_item_back">#F2F2F0</color>
+    <color name="FF02ACF9">#02acf9</color>
 </resources>

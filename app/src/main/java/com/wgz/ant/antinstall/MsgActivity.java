@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -50,7 +49,7 @@ public class MsgActivity extends Activity {
 
         workID = intent.getStringExtra("workID");
 
-        ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null);
+        ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null,null);
         pd.execute();
         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
             @Override
@@ -74,7 +73,7 @@ public class MsgActivity extends Activity {
 
 
 
-                Log.i("xml","msg====="+list1.toString());
+                //Log.i("xml","msg====="+list1.toString());
             }
 
             @Override
@@ -128,11 +127,13 @@ public class MsgActivity extends Activity {
         wancheng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final EditText inputServer = new EditText(MsgActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MsgActivity.this);
-                builder.setTitle("确认").setMessage("请确认完成").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setTitle("确认").setMessage("请输入验证码确认：").setView(inputServer).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null);
+                        String reason = inputServer.getText().toString();
+                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null,reason);
                         pd.execute();
                         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
                             @Override
@@ -177,7 +178,7 @@ public class MsgActivity extends Activity {
 
                         String reason = inputServer.getText().toString();
 
-                        ParserDetilXml pd = new ParserDetilXml("set",workID,"2",getsp2(),reason);
+                        ParserDetilXml pd = new ParserDetilXml("set",workID,"2",getsp2(),reason,null);
                         pd.execute();
                         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
                             @Override

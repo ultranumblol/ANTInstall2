@@ -11,6 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -19,6 +23,7 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
@@ -57,6 +62,13 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     BaiduMap mBaidumap = null;
     //搜索相关
     RoutePlanSearch mSearch = null;    // 搜索模块，也可去掉地图模块独立使用
+    //定位相关
+    private LocationClient mLocationClient;
+    private  MyLocationListener mLocationlistener;
+    private  boolean isFirstin = true;
+    private double mLatitude,mLongtitude;
+    private String myLocation;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +77,48 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
 
         return  view;
     }
+    private void initLocation() {
+        mLocationClient = new LocationClient(getActivity());
+        mLocationlistener = new MyLocationListener();
+        mLocationClient.registerLocationListener(mLocationlistener);
+        LocationClientOption option = new LocationClientOption();
+        option.setCoorType("bd09ll");
+        option.setIsNeedAddress(true);
+        option.setOpenGps(true);
+        option.setScanSpan(1000);
+        mLocationClient.setLocOption(option);
+    }
+    private  class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            MyLocationData data =  new MyLocationData.Builder()
+                    .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
+                    .longitude(bdLocation.getLongitude()).build();
+
+            mBaidumap.setMyLocationData(data);
+            // mLatitude = 30.67;
+            // mLongtitude = 104.06;
+            mLatitude = bdLocation.getLatitude();
+            mLongtitude =bdLocation.getLongitude();
+            myLocation = bdLocation.getAddrStr();
+            if (isFirstin){
+                //坐标
+                // LatLng latLng = new LatLng(30.67,104.06);
+                LatLng latLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
+                MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+                mBaidumap.animateMapStatus(msu);
+                isFirstin = false;
+                editSt.setText(myLocation);
+                //Toast.makeText(context,bdLocation.getAddrStr(),Toast.LENGTH_SHORT).show();
+
+
+
+            }
+
+        }
+    }
+
+
 
     private void initview(View view) {
         //初始化地图
@@ -73,21 +127,23 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         mMapView = (MapView) view.findViewById(R.id.map);
 
         mBaidumap = mMapView.getMap();
+        initLocation();
+
         //设定中心点坐标
-        LatLng cenpt = new LatLng(30.663791,104.07281);
-//定义地图状态
+        LatLng cenpt = new LatLng(mLatitude,mLongtitude);
+        //定义地图状态
         MapStatus mMapStatus = new MapStatus.Builder()
                 .target(cenpt)
                 .zoom(12)
                 .build();
-//定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
+        //定义MapStatusUpdate对象，以便描述地图状态将要发生的变化
 
         MapStatusUpdate mMapStatusUpdate = MapStatusUpdateFactory.newMapStatus(mMapStatus);
-//改变地图状态
+        //改变地图状态
         mBaidumap.setMapStatus(mMapStatusUpdate);
 
 
-        walk = (Button) view.findViewById(R.id.walk);
+        walk = (TextView) view.findViewById(R.id.walkway);
         transit = (TextView) view.findViewById(R.id.transit);
         drive = (TextView) view.findViewById(R.id.drive);
 
@@ -123,7 +179,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
                         .from(stNode)
                         .city("成都")
                         .to(enNode));
-            } else if (v.getId() == R.id.walk) {
+            } else if (v.getId() == R.id.walkway) {
                 mSearch.walkingSearch((new WalkingRoutePlanOption())
                         .from(stNode)
                         .to(enNode));

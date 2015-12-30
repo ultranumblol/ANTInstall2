@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -24,6 +30,9 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.navi.BaiduMapAppNotSupportNaviException;
+import com.baidu.mapapi.navi.BaiduMapNavigation;
+import com.baidu.mapapi.navi.NaviParaOption;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
@@ -38,6 +47,11 @@ import com.wgz.ant.antinstall.overlayutil.OverlayManager;
 import com.wgz.ant.antinstall.overlayutil.TransitRouteOverlay;
 import com.wgz.ant.antinstall.overlayutil.WalkingRouteOverlay;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by qwerr on 2015/12/28.
  */
@@ -45,7 +59,8 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     MapView mMapView = null;
     private BaiduMap mBaiduMap;
     private LinearLayout back;
-    private ImageView mylocation;
+    private ImageView mylocation,outmap;
+    private List<Map<String,Object>> data;
     //定位相关
     private LocationClient mLocationClient;
     private  MyLocationListener mLocationlistener;
@@ -53,6 +68,8 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     private double mLatitude,mLongtitude;
     private Context context;
     private String myLocation;
+    private String endaddress;
+    private PopupWindow popupWindow;
     //路线相关
     RouteLine route = null;
     OverlayManager routeOverlay = null;
@@ -79,7 +96,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
 
     private void initsearch() {
         Intent intent = getIntent();
-        String endaddress = intent.getStringExtra("endAddress");
+        endaddress = intent.getStringExtra("endAddress");
         mSearch = RoutePlanSearch.newInstance();
         mSearch.setOnGetRoutePlanResultListener(this);
         //重置浏览节点的路线数据
@@ -110,10 +127,20 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
 
 
     private void initview() {
+        outmap = (ImageView) findViewById(R.id.outmap);
         back = (LinearLayout) findViewById(R.id.map2_back);
         mylocation = (ImageView) findViewById(R.id.mylocation);
         mMapView = (MapView)findViewById(R.id.map2);
         mBaiduMap = mMapView.getMap();
+        outmap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow(-126, 24);
+            }
+        });
+
+
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,8 +154,81 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
 
             }
         });
+        data = new ArrayList<Map<String,Object>>();
+        Map<String,Object> map = new HashMap<>();
+        map.put("name","百度地图");
+        data.add(map);
+        Map<String,Object> map2 = new HashMap<>();
+        map2.put("name","高德地图");
+        data.add(map2);
 
     }
+
+    private void showPopupWindow(int xoff, int yoff) {
+
+
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, new String[] { "百度地图", "高德地图" });
+        ListView listview = new ListView(this);
+        listview.setAdapter(new SimpleAdapter(getApplicationContext(),data,R.layout.popitem,new String[]{"name"},new int[]{R.id.id_popitem}));
+        popupWindow = new PopupWindow(this);
+        //popupWindow.setHeight(160);
+        popupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupWindow.setWidth(180);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.parseColor("#ffffff")));
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
+        popupWindow.setContentView(listview);
+        popupWindow.showAsDropDown(outmap, xoff, yoff);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView name = (TextView) view.findViewById(R.id.id_popitem);
+                switch (name.getText().toString()){
+                    case "百度地图":
+                        StartBaidu();
+
+                        break;
+                    case "高德地图":
+
+
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+        });
+
+    }
+
+
+    private void StartBaidu(){
+// 构建 导航参数
+// 天安门坐标
+        double mLat1 = mLatitude;
+        double mLon1 = mLatitude;
+// 百度大厦坐标
+        double mLat2 = 30.67;
+        double mLon2 = 104.308194;
+        LatLng pt1 = new LatLng(mLat1, mLon1);
+        LatLng pt2 = new LatLng(mLat2, mLon2);
+
+        NaviParaOption para = new NaviParaOption()
+                .startPoint(pt1).endPoint(pt2)
+                .startName(myLocation).endName(endaddress);
+
+        try {
+// 调起百度地图步行导航
+            BaiduMapNavigation.openBaiduMapWalkNavi(para, this);
+        } catch (BaiduMapAppNotSupportNaviException e) {
+            //Toast.makeText(getApplicationContext(),"请先安装百度地图！",Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+
+        }
+
+    }
+
+
     /**
      * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
      * @param context
