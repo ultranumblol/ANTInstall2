@@ -94,16 +94,24 @@
                 android:layout_marginLeft="20dp"
                 android:background="@color/gray"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="版本与说明"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:id="@+id/changecode"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="修 改 密 码"
 
 
-                android:textSize="18dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                />
+                    android:textSize="18dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    />
+
+            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1px"

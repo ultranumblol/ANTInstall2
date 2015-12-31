@@ -130,7 +130,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         initLocation();
 
         //设定中心点坐标
-        LatLng cenpt = new LatLng(mLatitude,mLongtitude);
+        LatLng cenpt = new LatLng(30.67,104.06);
         //定义地图状态
         MapStatus mMapStatus = new MapStatus.Builder()
                 .target(cenpt)
@@ -447,3 +447,4 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     }
 
 }
+

@@ -129,11 +129,11 @@ public class MsgActivity extends Activity {
             public void onClick(View v) {
                 final EditText inputServer = new EditText(MsgActivity.this);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MsgActivity.this);
-                builder.setTitle("确认").setMessage("请输入验证码确认：").setView(inputServer).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setTitle("确认完成").setMessage("请输入验证码确认：").setView(inputServer).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String reason = inputServer.getText().toString();
-                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null,reason);
+                        String code = inputServer.getText().toString();
+                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null,code);
                         pd.execute();
                         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
                             @Override
@@ -144,8 +144,8 @@ public class MsgActivity extends Activity {
 
                             @Override
                             public void onDataFailed() {
-                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
-                                MsgActivity.this.finish();
+                                Toast.makeText(MsgActivity.this,"验证码有误",Toast.LENGTH_SHORT).show();
+                                //MsgActivity.this.finish();
                             }
                         });
 

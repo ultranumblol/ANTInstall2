@@ -3,11 +3,14 @@ package com.wgz.ant.antinstall;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -35,6 +38,9 @@ import com.baidu.mapapi.navi.BaiduMapNavigation;
 import com.baidu.mapapi.navi.NaviParaOption;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
 import com.baidu.mapapi.search.route.PlanNode;
@@ -42,6 +48,7 @@ import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
+import com.baidu.mapapi.utils.OpenClientUtil;
 import com.wgz.ant.antinstall.overlayutil.DrivingRouteOverlay;
 import com.wgz.ant.antinstall.overlayutil.OverlayManager;
 import com.wgz.ant.antinstall.overlayutil.TransitRouteOverlay;
@@ -55,7 +62,7 @@ import java.util.Map;
 /**
  * Created by qwerr on 2015/12/28.
  */
-public class NewMapActivity extends Activity implements OnGetRoutePlanResultListener {
+public class NewMapActivity extends Activity implements OnGetRoutePlanResultListener,OnGetGeoCoderResultListener {
     MapView mMapView = null;
     private BaiduMap mBaiduMap;
     private LinearLayout back;
@@ -70,6 +77,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     private String myLocation;
     private String endaddress;
     private PopupWindow popupWindow;
+
     //路线相关
     RouteLine route = null;
     OverlayManager routeOverlay = null;
@@ -104,8 +112,9 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         mBaiduMap.clear();
         // 处理搜索按钮响应
         //设置起终点信息，对于tranist search 来说，城市名无意义
-        PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", "蚂蚁物流");
+        PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", myLocation);
         PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都",endaddress );
+
         mSearch.walkingSearch((new WalkingRoutePlanOption())
                 .from(stNode)
                 .to(enNode));
@@ -121,7 +130,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         option.setCoorType("bd09ll");
         option.setIsNeedAddress(true);
         option.setOpenGps(true);
-        option.setScanSpan(1000);
+        option.setScanSpan(2000);
         mLocationClient.setLocOption(option);
     }
 
@@ -221,14 +230,46 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
 // 调起百度地图步行导航
             BaiduMapNavigation.openBaiduMapWalkNavi(para, this);
         } catch (BaiduMapAppNotSupportNaviException e) {
-            //Toast.makeText(getApplicationContext(),"请先安装百度地图！",Toast.LENGTH_SHORT).show();
+            showDialog();
             e.printStackTrace();
 
         }
 
     }
 
+    /**
+     * 提示未安装百度地图app或app版本过低
+     *
+     */
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("您尚未安装百度地图app或app版本过低，点击确认安装？");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                /**
+                 * OpenClientUtil:调起百度客户端工具类
+                 *
+                 * public static int getBaiduMapVersion(Context context)
+                 * 获取百度地图客户端版本号
+                 * 返回0代表没有安装百度地图客户端
+                 * */
+                OpenClientUtil.getLatestBaiduMapApp(NewMapActivity.this);
+            }
+        });
 
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
+
+    }
     /**
      * 判断GPS是否开启，GPS或者AGPS开启一个就认为是开启的
      * @param context
@@ -309,9 +350,6 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
             return;
         }
         if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-
-            // mBtnPre.setVisibility(View.VISIBLE);
-            // mBtnNext.setVisibility(View.VISIBLE);
             route = result.getRouteLines().get(0);
             TransitRouteOverlay overlay = new MyTransitRouteOverlay(mBaiduMap);
             mBaiduMap.setOnMarkerClickListener(overlay);
@@ -345,12 +383,28 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         }
     }
 
+    @Override
+    public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+
+
+    }
+
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+
+
+
+    }
+
     private  class MyLocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             MyLocationData data =  new MyLocationData.Builder()
                     .accuracy(bdLocation.getRadius()).latitude(bdLocation.getLatitude())
                     .longitude(bdLocation.getLongitude()).build();
+
+
 
             mBaiduMap.setMyLocationData(data);
            // mLatitude = 30.67;
@@ -365,7 +419,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
                 MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
                 mBaiduMap.animateMapStatus(msu);
                 isFirstin = false;
-
+                Log.i("map","first!!!!");
                 //Toast.makeText(context,bdLocation.getAddrStr(),Toast.LENGTH_SHORT).show();
 
 

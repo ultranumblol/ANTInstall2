@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wgz.ant.antinstall.ChangePassActivity;
 import com.wgz.ant.antinstall.LoginActivity;
 import com.wgz.ant.antinstall.R;
 
@@ -26,6 +27,7 @@ public class PersonFragment extends Fragment {
     private TextView outLogin;
     private LinearLayout testmap;
     private TextView username;
+    private LinearLayout changepass;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.personfragment,null);
@@ -39,11 +41,23 @@ public class PersonFragment extends Fragment {
     }
     private void initview(View view) {
 
-
+        changepass = (LinearLayout) view.findViewById(R.id.changecode);
         username = (TextView) view.findViewById(R.id.login_username);
         outLogin = (TextView) view.findViewById(R.id.login_out);
         testmap = (LinearLayout) view.findViewById(R.id.testmap);
         username.setText(getsp2());
+        changepass.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ChangePassActivity.class);
+                startActivity(intent);
+            }
+        });
         outLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

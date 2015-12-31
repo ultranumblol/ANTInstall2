@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.umeng.update.UmengUpdateAgent;
 import com.wgz.ant.antinstall.adapter.MyFragmentPagerAdapter;
 import com.wgz.ant.antinstall.fragment.MapFragment;
@@ -41,7 +40,6 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_antinsatll);
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
@@ -68,9 +66,21 @@ public class MainActivity extends FragmentActivity {
             });
         }
     }*/
+
+   /* @Override
+    protected void onRestart() {
+        super.onRestart();
+        bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+        mainviewpager.setCurrentItem(0);
+        bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+    }*/
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String result = data.getExtras().getString("result");
+        //String result = data.getExtras().getString("result");
 
 //        Fragment f2 = getSupportFragmentManager().findFragmentById(fragments.get(1).getId());
 //

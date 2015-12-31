@@ -42,12 +42,12 @@ public class MsgFragment extends Fragment {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("xml","msggragment执行了回调刷新方法");
+        //Log.i("xml","msggragment执行了回调刷新方法");
         initData();
         String result = data.getExtras().getString("result");
         if(result.equals("该刷新了")){
 
-            Log.i("xml","msggragment执行了回调刷新方法");
+            //Log.i("xml","msggragment执行了回调刷新方法");
             initData();
         }
     }

@@ -118,5 +118,50 @@ public class XmlInputStream {
         return inStream;
 
     }
+    public InputStream getStream(String username,String oldpassword,String newpassword,String sign){
+
+
+        String path2 = "http://wuliu.chinaant.com/AppChangePassword.aspx?username="+username+"&oldpassword="+oldpassword+"&newpassword="+newpassword+"&sign="+sign;
+
+
+
+
+        Log.i("xml2", "XML==path：" + path2);
+        URL myURL = null;
+        try {
+            myURL = new URL(
+                    path2);
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection)myURL.openConnection();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        conn.setReadTimeout(5*1000);
+        try {
+            conn.setRequestMethod("GET");
+        } catch (ProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        InputStream inStream = null;
+        try {
+            inStream = conn.getInputStream();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return inStream;
+
+    }
 
 }
