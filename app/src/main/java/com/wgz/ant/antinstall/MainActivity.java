@@ -87,7 +87,9 @@ public class MainActivity extends FragmentActivity {
 //
 //        f2.onActivityResult(requestCode, resultCode, data);
         Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(0).getId());
-        f.onActivityResult(requestCode, resultCode, data);
+        if (data!=null){
+            f.onActivityResult(requestCode, resultCode, data);
+        }
     }
     public void initview() {
          msgFragment = new MsgFragment();

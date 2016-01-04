@@ -11,6 +11,7 @@ import com.wgz.ant.antinstall.util.XmlInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +75,14 @@ public class ParserDetilXml extends AsyncTask {
                     }if (detail.getPrice()==null){
                         map.put("privce","---");
                     }else {
-                        map.put("privce",detail.getPrice());
+
+                        double money=Double.parseDouble(detail.getPrice());
+                        String money2 =formatDouble4(money);
+
+                        map.put("privce",money2);
+
+
+                        //map.put("privce",detail.getPrice());
                     }if (detail.getGoodname()==null){
                         map.put("name1","---");
                     }else {
@@ -83,7 +91,11 @@ public class ParserDetilXml extends AsyncTask {
                     if (detail.getGoodsmoeny()==null){
                         map.put("goodsmoney","---");
                     }else {
-                        map.put("goodsmoney",detail.getGoodsmoeny());
+
+                        double money=Double.parseDouble(detail.getGoodsmoeny());
+                      String money2 =formatDouble4(money);
+
+                        map.put("goodsmoney",money2);
                     }if (detail.getCount()==null){
                         map.put("quantity","---");
 
@@ -101,7 +113,7 @@ public class ParserDetilXml extends AsyncTask {
                         map.put("azreservation","---");
                     }else {
 
-                        map.put("azreservation",detail.getAzreservation());
+                        map.put("azreservation",detail.getAzreservation().substring(0,10));
                     }
                     if (detail.getDelivery()==null){
                         map.put("delivery","---");
@@ -109,6 +121,19 @@ public class ParserDetilXml extends AsyncTask {
 
                         map.put("delivery",detail.getDelivery());
                     }
+                    if (detail.getServerType()==null){
+                        map.put("servertype","---");
+                    }else {
+
+                        map.put("servertype",detail.getServerType());
+                    }
+                    if (detail.getServicestype()==null){
+                        map.put("servicestype","---");
+                    }else {
+
+                        map.put("servicestype",detail.getServicestype());
+                    }
+
                     dets.add(map);
 
                 }
@@ -203,6 +228,13 @@ public class ParserDetilXml extends AsyncTask {
             OnDataFinishedListener onDataFinishedListener) {
         this.onDataFinishedListener = onDataFinishedListener;
     }
+    public static String formatDouble4(double d) {
+        DecimalFormat df = new DecimalFormat("#.00");
+
+
+        return df.format(d);
+    }
+
     @Override
     protected void onPostExecute(Object o) {
         Log.i("xml","o======="+o.toString());

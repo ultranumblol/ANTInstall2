@@ -15,6 +15,24 @@ public class Detail {
     private String aznumber;
     private String azreservation;
     private String delivery;
+    private String serverType;
+    private String servicestype;
+
+    public String getServicestype() {
+        return servicestype;
+    }
+
+    public void setServicestype(String servicestype) {
+        this.servicestype = servicestype;
+    }
+
+    public String getServerType() {
+        return serverType;
+    }
+
+    public void setServerType(String serverType) {
+        this.serverType = serverType;
+    }
 
     public void setAzreservation(String azreservation) {
         this.azreservation = azreservation;

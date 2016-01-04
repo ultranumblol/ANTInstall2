@@ -77,6 +77,14 @@ public class PullPraserDetail implements DetailPraser {
                         event=pullParser.next();
                         datails.setAzreservation(pullParser.getText());
                     }
+                    else if (pullParser.getName().equals("servertype")) {
+                        event=pullParser.next();
+                        datails.setServerType(pullParser.getText());
+                    }
+                    else if (pullParser.getName().equals("servicestype")) {
+                        event=pullParser.next();
+                        datails.setServicestype(pullParser.getText());
+                    }
 
 
                     break;

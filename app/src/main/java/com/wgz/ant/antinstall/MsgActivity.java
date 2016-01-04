@@ -65,12 +65,13 @@ public class MsgActivity extends Activity {
                 money.setText(list1.get(0).get("privce").toString());
                 azreservation.setText(list1.get(0).get("azreservation").toString());
                 delivery.setText(list1.get(0).get("delivery").toString());
+                servType.setText(list1.get(0).get("servertype").toString());
 
 
 
-                msg_lv.setAdapter(new SimpleAdapter(MsgActivity.this,list1,R.layout.goods_lv_item,new String[]{"name1","quantity","goodsmoney"},
+                msg_lv.setAdapter(new SimpleAdapter(MsgActivity.this,list1,R.layout.goods_lv_item,new String[]{"name1","quantity","goodsmoney","servicestype"},
 
-                        new int[]{R.id.id_goods_name,R.id.id_goods_num,R.id.id_goods_price}));
+                        new int[]{R.id.id_goods_name,R.id.id_goods_num,R.id.id_goods_price,R.id.id_goods_type}));
 
 
 
