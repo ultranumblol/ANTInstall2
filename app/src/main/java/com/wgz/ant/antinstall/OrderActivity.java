@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import com.umeng.analytics.MobclickAgent;
+
 /**
  * Created by qwerr on 2015/11/18.
  */
@@ -21,7 +23,14 @@ public class OrderActivity extends Activity {
         setContentView(R.layout.msg);
         initview();
     }
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     private void initview() {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("order");

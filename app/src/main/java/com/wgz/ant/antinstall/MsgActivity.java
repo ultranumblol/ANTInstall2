@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 import com.wgz.ant.antinstall.xmlpraser.ParserDetilXml;
 
@@ -93,7 +94,14 @@ public class MsgActivity extends Activity {
         setResult(RESULT_OK, intent);
         super.finish();
     }
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     private String getsp2(){
         SharedPreferences preferences = getSharedPreferences("autologin", Context.MODE_PRIVATE);
         String flag = preferences.getString("username", "????");

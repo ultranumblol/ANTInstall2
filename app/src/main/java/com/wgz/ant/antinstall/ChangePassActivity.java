@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wgz.ant.antinstall.util.ChangePass;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 
@@ -33,6 +34,15 @@ public class ChangePassActivity extends Activity {
         String flag = preferences.getString("username", "false");
         return flag;
     }
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     private void initview() {
         oldpass = (EditText) findViewById(R.id.oldpass);
         newpass = (EditText) findViewById(R.id.newpass);

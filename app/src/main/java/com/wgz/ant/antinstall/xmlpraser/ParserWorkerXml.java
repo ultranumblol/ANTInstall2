@@ -41,9 +41,25 @@ public class ParserWorkerXml extends AsyncTask {
             mWorker = wparser.parse(is);
             for (Worker worker:mWorker){
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put("workID",worker.getWorkID());
-                map.put("aznumber",worker.getAzdispatchingnumber());
-                map.put("workerName",worker.getWorkerName());
+                if (worker.getWorkID()==null){
+                    map.put("workID","---");
+                }else {
+                    map.put("workID",worker.getWorkID());
+
+                }
+                if (worker.getAzdispatchingnumber()==null){
+                    map.put("aznumber","---");
+                }else {
+
+                    map.put("aznumber",worker.getAzdispatchingnumber());
+                }
+                if (worker.getWorkerName()==null){
+                    map.put("workerName","---");
+                }
+                else {
+                    map.put("workerName",worker.getWorkerName());
+
+                }
                 wors.add(map);
 
             }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.wgz.ant.antinstall.adapter.MyFragmentPagerAdapter;
 import com.wgz.ant.antinstall.fragment.MapFragment;
@@ -118,7 +119,14 @@ public class MainActivity extends FragmentActivity {
         bartv1.setTextColor(Color.WHITE);
         bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
     }
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     public  void BaronClick(View view){
 

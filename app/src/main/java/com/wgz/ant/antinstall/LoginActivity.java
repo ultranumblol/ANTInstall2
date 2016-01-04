@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
+import com.umeng.analytics.MobclickAgent;
 import com.wgz.ant.antinstall.util.CheckLogin;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
 
@@ -107,7 +107,14 @@ public class LoginActivity extends Activity {
         editor.commit();
 
     }
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     private String getsp(){
         SharedPreferences preferences = getSharedPreferences("autologin", Context.MODE_PRIVATE);
         String flag = preferences.getString("autologin", "false");

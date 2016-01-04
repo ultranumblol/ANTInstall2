@@ -31,14 +31,16 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.navi.BaiduMapAppNotSupportNaviException;
 import com.baidu.mapapi.navi.BaiduMapNavigation;
 import com.baidu.mapapi.navi.NaviParaOption;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
@@ -49,6 +51,8 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.OpenClientUtil;
+import com.baidu.mapapi.utils.route.RouteParaOption;
+import com.umeng.analytics.MobclickAgent;
 import com.wgz.ant.antinstall.overlayutil.DrivingRouteOverlay;
 import com.wgz.ant.antinstall.overlayutil.OverlayManager;
 import com.wgz.ant.antinstall.overlayutil.TransitRouteOverlay;
@@ -72,11 +76,12 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
     private LocationClient mLocationClient;
     private  MyLocationListener mLocationlistener;
     private  boolean isFirstin = true;
-    private double mLatitude,mLongtitude;
+    private double mLatitude,mLongtitude, mLatitude2,mLongtitude2;
     private Context context;
     private String myLocation;
     private String endaddress;
     private PopupWindow popupWindow;
+    GeoCoder msearch2 = null; // 搜索模块，也可去掉地图模块独立使用
 
     //路线相关
     RouteLine route = null;
@@ -110,6 +115,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         //重置浏览节点的路线数据
         route = null;
         mBaiduMap.clear();
+        GERSearch();
         // 处理搜索按钮响应
         //设置起终点信息，对于tranist search 来说，城市名无意义
         PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", myLocation);
@@ -134,13 +140,22 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         mLocationClient.setLocOption(option);
     }
 
+private void GERSearch(){
+    msearch2.geocode(new GeoCodeOption().city(
+            "成都").address(endaddress));
 
+
+}
     private void initview() {
         outmap = (ImageView) findViewById(R.id.outmap);
         back = (LinearLayout) findViewById(R.id.map2_back);
         mylocation = (ImageView) findViewById(R.id.mylocation);
         mMapView = (MapView)findViewById(R.id.map2);
         mBaiduMap = mMapView.getMap();
+        // 初始化搜索模块，注册事件监听
+        msearch2 = GeoCoder.newInstance();
+        msearch2.setOnGetGeoCodeResultListener(this);
+
         outmap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,11 +232,20 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         double mLat1 = mLatitude;
         double mLon1 = mLatitude;
 // 百度大厦坐标
-        double mLat2 = 30.67;
-        double mLon2 = 104.308194;
+        double mLat2 = mLatitude2;
+        double mLon2 = mLatitude2;
         LatLng pt1 = new LatLng(mLat1, mLon1);
         LatLng pt2 = new LatLng(mLat2, mLon2);
 
+        // 构建 route搜索参数（百度地图demo）
+        RouteParaOption para2 = new RouteParaOption()
+                .startPoint(pt1)
+//          .startName("天安门")
+//          .endPoint(ptEnd);
+                .endName("蚂蚁物流")
+                .cityName("成都");
+
+        //自己写的
         NaviParaOption para = new NaviParaOption()
                 .startPoint(pt1).endPoint(pt2)
                 .startName(myLocation).endName(endaddress);
@@ -229,9 +253,9 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         try {
 // 调起百度地图步行导航
             BaiduMapNavigation.openBaiduMapWalkNavi(para, this);
-        } catch (BaiduMapAppNotSupportNaviException e) {
-            showDialog();
+        } catch (Exception e) {
             e.printStackTrace();
+            showDialog();
 
         }
 
@@ -385,14 +409,41 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
 
     @Override
     public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-
+        if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(NewMapActivity.this, "抱歉，未能找到结果", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+        mBaiduMap.clear();
+        mBaiduMap.addOverlay(new MarkerOptions().position(geoCodeResult.getLocation())
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.icon_marka)));
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(geoCodeResult
+                .getLocation()));
+        mLatitude2=geoCodeResult.getLocation().latitude;
+        mLongtitude2 = geoCodeResult.getLocation().longitude;
+        String strInfo = String.format("纬度：%f 经度：%f",
+                geoCodeResult.getLocation().latitude, geoCodeResult.getLocation().longitude);
+       // Toast.makeText(NewMapActivity.this, strInfo, Toast.LENGTH_LONG).show();
 
 
     }
 
     @Override
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
-
+        if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(NewMapActivity.this, "抱歉，未能找到结果", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+        mBaiduMap.clear();
+        mBaiduMap.addOverlay(new MarkerOptions().position(reverseGeoCodeResult.getLocation())
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.icon_marka)));
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(reverseGeoCodeResult
+                .getLocation()));
+        Toast.makeText(NewMapActivity.this, reverseGeoCodeResult.getAddress(),
+                Toast.LENGTH_LONG).show();
 
 
     }
@@ -509,6 +560,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         super.onResume();
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -536,6 +588,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         super.onPause();
         //在activity执行onPause时执行mMapView. onPause ()，实现地图生命周期管理
         mMapView.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

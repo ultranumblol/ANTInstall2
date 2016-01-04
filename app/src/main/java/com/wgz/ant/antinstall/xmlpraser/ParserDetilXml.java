@@ -56,16 +56,59 @@ public class ParserDetilXml extends AsyncTask {
                 mdetail = dp.parse(is);
                 for (Detail detail:mdetail){
                     Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("name",detail.getName());
-                    map.put("address",detail.getAddress());
-                    map.put("phone",detail.getPhone());
-                    map.put("privce",detail.getPrice());
-                    map.put("name1",detail.getGoodname());
-                    map.put("goodsmoney",detail.getGoodsmoeny());
-                    map.put("quantity",detail.getCount());
-                    map.put("aznumber",detail.getAznumber());
-                    map.put("azreservation",detail.getAzreservation());
-                    map.put("delivery",detail.getDelivery());
+                    if (detail.getName()==null){
+                        map.put("name","---");
+                    }else{
+                        map.put("name",detail.getName());
+                    }
+                    if (detail.getAddress()==null){
+                        map.put("address","---");
+                    }else {
+                        map.put("address",detail.getAddress());
+                    }
+                    if (detail.getPhone()==null){
+                        map.put("phone","---");
+                    }else {
+
+                        map.put("phone",detail.getPhone());
+                    }if (detail.getPrice()==null){
+                        map.put("privce","---");
+                    }else {
+                        map.put("privce",detail.getPrice());
+                    }if (detail.getGoodname()==null){
+                        map.put("name1","---");
+                    }else {
+                        map.put("name1",detail.getGoodname());
+                    }
+                    if (detail.getGoodsmoeny()==null){
+                        map.put("goodsmoney","---");
+                    }else {
+                        map.put("goodsmoney",detail.getGoodsmoeny());
+                    }if (detail.getCount()==null){
+                        map.put("quantity","---");
+
+                    }else {
+                        map.put("quantity",detail.getCount());
+
+                    }
+                    if (detail.getAznumber()==null){
+                        map.put("aznumber","---");
+                    }else {
+                        map.put("aznumber",detail.getAznumber());
+
+                    }
+                    if (detail.getAzreservation()==null){
+                        map.put("azreservation","---");
+                    }else {
+
+                        map.put("azreservation",detail.getAzreservation());
+                    }
+                    if (detail.getDelivery()==null){
+                        map.put("delivery","---");
+                    }else {
+
+                        map.put("delivery",detail.getDelivery());
+                    }
                     dets.add(map);
 
                 }

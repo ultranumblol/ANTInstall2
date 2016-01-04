@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +53,6 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     RouteLine route = null;
     OverlayManager routeOverlay = null;
     boolean useDefaultIcon = false;
-    private TextView popupText = null;//泡泡view
     EditText editSt,editEn;
     //地图相关，使用继承MapView的MyRouteMapView目的是重写touch事件实现泡泡处理
     //如果不处理touch事件，则无需继承，直接使用MapView即可
@@ -77,6 +75,12 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
 
         return  view;
     }
+    //定位到我的位置
+    private void CenterToMyLocation() {
+        LatLng latLng = new LatLng(mLatitude,mLongtitude);
+        MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+        mBaidumap.animateMapStatus(msu);
+    }
     private void initLocation() {
         mLocationClient = new LocationClient(getActivity());
         mLocationlistener = new MyLocationListener();
@@ -87,6 +91,7 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         option.setOpenGps(true);
         option.setScanSpan(1000);
         mLocationClient.setLocOption(option);
+        mLocationClient.start();
     }
     private  class MyLocationListener implements BDLocationListener {
         @Override
@@ -125,7 +130,15 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         editSt = (EditText) view.findViewById(R.id.start);
         editEn = (EditText)view. findViewById(R.id.end);
         mMapView = (MapView) view.findViewById(R.id.map);
+        editSt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    CenterToMyLocation();
 
+                }
+            }
+        });
         mBaidumap = mMapView.getMap();
         initLocation();
 
@@ -186,93 +199,6 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
             }
         }
     }
-
-
-    /**
-     * 节点浏览示例
-     *
-     * @param v
-     */
-    /*public void nodeClick(View v) {
-        if (route == null ||
-                route.getAllStep() == null) {
-            return;
-        }
-        if (nodeIndex == -1 && v.getId() == R.id.pre) {
-            return;
-        }
-        //设置节点索引
-        if (v.getId() == R.id.next) {
-            if (nodeIndex < route.getAllStep().size() - 1) {
-                nodeIndex++;
-            } else {
-                return;
-            }
-        } else if (v.getId() == R.id.pre) {
-            if (nodeIndex > 0) {
-                nodeIndex--;
-            } else {
-                return;
-            }
-        }
-        //获取节结果信息
-        LatLng nodeLocation = null;
-        String nodeTitle = null;
-        Object step = route.getAllStep().get(nodeIndex);
-        if (step instanceof DrivingRouteLine.DrivingStep) {
-            nodeLocation = ((DrivingRouteLine.DrivingStep) step).getEntrance().getLocation();
-            nodeTitle = ((DrivingRouteLine.DrivingStep) step).getInstructions();
-        } else if (step instanceof WalkingRouteLine.WalkingStep) {
-            nodeLocation = ((WalkingRouteLine.WalkingStep) step).getEntrance().getLocation();
-            nodeTitle = ((WalkingRouteLine.WalkingStep) step).getInstructions();
-        } else if (step instanceof TransitRouteLine.TransitStep) {
-            nodeLocation = ((TransitRouteLine.TransitStep) step).getEntrance().getLocation();
-            nodeTitle = ((TransitRouteLine.TransitStep) step).getInstructions();
-        }
-
-        if (nodeLocation == null || nodeTitle == null) {
-            return;
-        }
-        //移动节点至中心
-        mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(nodeLocation));
-        // show popup
-        popupText = new TextView(getActivity());
-        popupText.setBackgroundResource(R.drawable.popup);
-        popupText.setTextColor(0xFF000000);
-        popupText.setText(nodeTitle);
-        mBaidumap.showInfoWindow(new InfoWindow(popupText, nodeLocation, 0));
-
-    }*/
-
-    /**
-     * 切换路线图标，刷新地图使其生效
-     * 注意： 起终点图标使用中心对齐.
-     */
-    public void changeRouteIcon(View v) {
-        if (routeOverlay == null) {
-            return;
-        }
-        if (useDefaultIcon) {
-            ((Button) v).setText("自定义起终点图标");
-            Toast.makeText(getActivity(),
-                    "将使用系统起终点图标",
-                    Toast.LENGTH_SHORT).show();
-
-        } else {
-            ((Button) v).setText("系统起终点图标");
-            Toast.makeText(getActivity(),
-                    "将使用自定义起终点图标",
-                    Toast.LENGTH_SHORT).show();
-
-        }
-        useDefaultIcon = !useDefaultIcon;
-        routeOverlay.removeFromMap();
-        routeOverlay.addToMap();
-    }
-
-
-
-
     @Override
     public void onGetWalkingRouteResult(WalkingRouteResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
@@ -443,6 +369,11 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     public void onDestroy() {
         mSearch.destroy();
         mMapView.onDestroy();
+        mMapView = null;
+        // 退出时销毁定位
+        mLocationClient.stop();
+        // 关闭定位图层
+        mBaidumap.setMyLocationEnabled(false);
         super.onDestroy();
     }
 
