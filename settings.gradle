@@ -1,1 +1,1 @@
-include ':app', ':base-adapter-master'
+include ':app'
