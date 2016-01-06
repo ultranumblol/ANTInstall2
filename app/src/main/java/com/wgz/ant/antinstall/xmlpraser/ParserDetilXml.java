@@ -49,7 +49,6 @@ public class ParserDetilXml extends AsyncTask {
             sign1=sign;
             XmlInputStream xmlInputStream = new XmlInputStream();
             InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
-
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             DetailPraser dp = new PullPraserDetail();

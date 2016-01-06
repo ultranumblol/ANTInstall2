@@ -50,6 +50,8 @@ public class MsgActivity extends Activity {
 
         workID = intent.getStringExtra("workID");
 
+
+
         ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null,null);
         pd.execute();
         pd.setOnDataFinishedListener(new OnDataFinishedListener() {

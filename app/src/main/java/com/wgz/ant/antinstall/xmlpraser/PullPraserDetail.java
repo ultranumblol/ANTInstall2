@@ -36,17 +36,17 @@ public class PullPraserDetail implements DetailPraser {
                         datails = new Detail();
                     }
                     else if (pullParser.getName().equals("aznumber")) {
-                        event=pullParser.next();//让解析器指向id属性的值
+                        event=pullParser.next();
                         datails.setAznumber(pullParser.getText());
                     }
                     else if (pullParser.getName().equals("name")) {
-                        event=pullParser.next();//让解析器指向id属性的值
+                        event=pullParser.next();
 
                         datails.setName(pullParser.getText());
 
                     }
                     else if (pullParser.getName().equals("phone1")) {
-                        event=pullParser.next();//让解析器指向pid属性的值
+                        event=pullParser.next();
                         datails.setPhone(pullParser.getText());
                     }
                     else if (pullParser.getName().equals("address")) {
