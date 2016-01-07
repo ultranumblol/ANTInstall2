@@ -49,9 +49,20 @@ public class MsgActivity extends Activity {
         Intent intent = getIntent();
 
         workID = intent.getStringExtra("workID");
+/*//通用解析
+        PraseXmlBackground pxb = new PraseXmlBackground("get",workID,null,null,null,null);
+        pxb.execute();
+        pxb.setOnDataCallBack(new AsynCallBack() {
+            @Override
+            public void onDatasucess(Object data) {
+                Toast.makeText(getApplicationContext(),"成功",Toast.LENGTH_SHORT).show();
+            }
 
-
-
+            @Override
+            public void onDatafaild() {
+                Toast.makeText(getApplicationContext(),"1111",Toast.LENGTH_SHORT).show();
+            }
+        });*/
         ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null,null);
         pd.execute();
         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
@@ -143,7 +154,7 @@ public class MsgActivity extends Activity {
                 builder.setTitle("确认完成").setMessage("请输入验证码确认：").setView(inputServer).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String code = inputServer.getText().toString();
+                        String code = inputServer.getText().toString().replaceAll( "\\s", "");
                         ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null,code);
                         pd.execute();
                         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
@@ -187,8 +198,7 @@ public class MsgActivity extends Activity {
 
                     public void onClick(DialogInterface dialog, int which) {
 
-                        String reason = inputServer.getText().toString();
-
+                        String reason = inputServer.getText().toString().replaceAll( "\\s", "");
                         ParserDetilXml pd = new ParserDetilXml("set",workID,"2",getsp2(),reason,null);
                         pd.execute();
                         pd.setOnDataFinishedListener(new OnDataFinishedListener() {

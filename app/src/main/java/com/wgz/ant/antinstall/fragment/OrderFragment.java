@@ -22,6 +22,8 @@ import com.wgz.ant.antinstall.view.RefreshableView;
 import com.wgz.ant.antinstall.xmlpraser.ParserWorkerXml;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -163,6 +165,7 @@ private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>()
                 List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
                 list1 = (List<Map<String, Object>>) data;
                 Log.i("xml","list1111==="+list1.toString());
+                sort(list1);
                 tuotoulv.setAdapter(new OrderAdapter(list1,getActivity(),1));
             }
 
@@ -175,6 +178,18 @@ private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>()
 
 
     }
+
+    //根据workID对list排序
+    public void sort(List<Map<String, Object>> list) {
+        Collections.sort(list, new Comparator<Map<String, Object>>() {
+            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
+                return Integer.parseInt(o1.get("workID").toString())  > Integer.parseInt(o2
+                        .get("workID").toString())  ? (Integer.parseInt(o1.get("workID").toString())  == Integer.parseInt(o2
+                        .get("workID").toString())  ? 0 : -1) : 1;
+            }
+        });
+    }
+
     private void initData2(){
         ParserWorkerXml pw = new ParserWorkerXml(getsp2(),2);
         pw.execute();
@@ -184,6 +199,8 @@ private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>()
                 List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
                 list1 = (List<Map<String, Object>>) data;
                 Log.i("xml","list222==="+list1.toString());
+
+                sort(list1);
                 untuotoulv.setAdapter(new OrderAdapter(list1,getActivity(),2));
             }
 

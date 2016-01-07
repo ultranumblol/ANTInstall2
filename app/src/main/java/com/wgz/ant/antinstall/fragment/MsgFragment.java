@@ -47,7 +47,7 @@ public class MsgFragment extends Fragment {
         String result = data.getExtras().getString("result");
         if(result.equals("该刷新了")){
 
-            //Log.i("xml","msggragment执行了回调刷新方法");
+            Log.i("xml","msggragment执行了回调刷新方法");
             initData();
         }
     }

@@ -3,6 +3,7 @@ package com.wgz.ant.antinstall.xmlpraser;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.wgz.ant.antinstall.util.SignMaker;
 import com.wgz.ant.antinstall.util.XmlInputStream;
 
 import org.dom4j.DocumentException;
@@ -16,13 +17,13 @@ import java.util.Map;
 public class PraseXmlBackground extends AsyncTask {
     AsynCallBack asynCallBack;
     private List<Map<String,Object>> mData;
-    private String type,id,state,sign,username,remark,code;
+    private String type,id,state,username,remark,code;
 
-    public PraseXmlBackground(String type, String id, String state, String sign, String username, String remark, String code) {
+    public PraseXmlBackground(String type, String id, String state,  String username, String remark, String code) {
         this.type = type;
         this.id = id;
         this.state = state;
-        this.sign = sign;
+
         this.username = username;
         this.remark = remark;
         this.code = code;
@@ -32,6 +33,8 @@ public class PraseXmlBackground extends AsyncTask {
     protected Object doInBackground(Object[] params) {
         PraserXml px = new PraserXml();
         try {
+            SignMaker sm = new SignMaker();
+            String sign = sm.getsign("type="+type,"id="+id);
            mData= px.prase(new XmlInputStream().getStream(type,id,state,sign,username,remark,code));
             Log.i("xxml","Mdata:"+mData.toString());
 
@@ -48,12 +51,9 @@ public void  setOnDataCallBack(AsynCallBack asynCallBack){
 }
     @Override
     protected void onPostExecute(Object o) {
+        Log.i("xxml","o======="+o.toString());
         List<Map<String, Object>> result = (List<Map<String, Object>>) o;
-        if (result.size()==0){
-            asynCallBack.onDatafaild();
-        }
-        if (result.size()!=0){
-            asynCallBack.onDatasucess(result);
-        }
+        Log.i("xxml","result:"+result.toString());
+        asynCallBack.onDatasucess(result);
     }
 }

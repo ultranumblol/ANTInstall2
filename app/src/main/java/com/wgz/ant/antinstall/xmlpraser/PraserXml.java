@@ -36,7 +36,7 @@ public class PraserXml  {
         return data;
     }
     private void listNodes(Element node) {
-        System.out.println("当前节点的名称：" + node.getName());
+        //System.out.println("当前节点的名称：" + node.getName());
         if (node.getName().equals("Table")){
             if (isFirstin){
                 map = new HashMap<>();
@@ -50,6 +50,8 @@ public class PraserXml  {
         //如果当前节点内容不为空，则输出
         if(!(node.getTextTrim().equals(""))){
             map.put(node.getName(),node.getText());
+        }if(node.getTextTrim()==null){
+            map.put(node.getName(),"---");
         }
         //同时迭代当前节点下面的所有子节点
         //使用递归
