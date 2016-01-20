@@ -4,10 +4,12 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * 通过url连接服务器 将返回的xml文件变成流
@@ -25,15 +27,24 @@ public class XmlInputStream {
 
             String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&sign="+sign;
             path = path2;
-        }if(remark!=null){
-            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&username="+username+"&remark="+remark+"&sign="+sign;
+        }if(remark!=null&&code==null){
+            String path2 = null;
+            try {
+                path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&username="+username+"&remark="+ URLEncoder.encode(remark, "UTF-8")+"&sign="+sign;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             path = path2;
 
         }
         if(code!=null){
-            String path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&username="+username+"&code="+code+"&sign="+sign;
+            String path2 = null;
+            try {
+                path2 = "http://wuliu.chinaant.com/AppInstallationEDI.aspx?"+"id="+id+"&"+"type="+type+"&state="+state+"&code="+ URLEncoder.encode(code, "UTF-8")+"&sign="+sign;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             path = path2;
-
         }
 
         Log.i("xml2", "XML==path：" + path);

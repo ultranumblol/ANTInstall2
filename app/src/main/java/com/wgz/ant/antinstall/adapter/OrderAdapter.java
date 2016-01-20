@@ -31,7 +31,14 @@ public class OrderAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.size();
+
+        if (data.size()<100){
+            return data.size();
+        }else {
+
+            return 100;
+        }
+        //return data.size();
     }
 
     @Override

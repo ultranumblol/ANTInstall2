@@ -83,13 +83,10 @@ public class MainActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //String result = data.getExtras().getString("result");
 
-//        Fragment f2 = getSupportFragmentManager().findFragmentById(fragments.get(1).getId());
-//
-//        f2.onActivityResult(requestCode, resultCode, data);
+       Fragment f2 = getSupportFragmentManager().findFragmentById(fragments.get(1).getId());
+       f2.onActivityResult(requestCode, resultCode, data);
         Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(0).getId());
-        if (data!=null){
-            f.onActivityResult(requestCode, resultCode, data);
-        }
+        f.onActivityResult(requestCode, resultCode, data);
     }
     public void initview() {
          msgFragment = new MsgFragment();

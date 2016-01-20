@@ -168,7 +168,7 @@ public class ParserDetilXml extends AsyncTask {
 
             }
         }
-        if (remark!=null){
+        if (remark!=null&&code==null){
             String sign = sm.getsign("type="+type,"id="+id,"state="+state,"username="+username,"remark="+remark);
             sign1=sign;
             XmlInputStream xmlInputStream = new XmlInputStream();
@@ -195,7 +195,9 @@ public class ParserDetilXml extends AsyncTask {
 
             }
         }if (remark==null&&code!=null&&state!=null){
-            String sign = sm.getsign("type="+type,"id="+id,"state="+state,"username="+username,"code="+code);
+
+            Log.i("xml","codecodecodecode");
+            String sign = sm.getsignCode("type="+type,"id="+id,"state="+state,"code="+code);
             sign1=sign;
             XmlInputStream xmlInputStream = new XmlInputStream();
             InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
