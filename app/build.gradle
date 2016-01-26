@@ -30,5 +30,6 @@ dependencies {
     compile files('src/main/jniLibs/BaiduLBS_Android.jar')
     compile 'me.drakeet.materialdialog:library:1.2.8'
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'com.zhy:okhttputils:2.2.0'
     compile files('libs/volley.jar')
 }

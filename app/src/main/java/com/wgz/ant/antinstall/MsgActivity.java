@@ -121,6 +121,7 @@ public class MsgActivity extends Activity {
         String flag = preferences.getString("username", "????");
         return flag;
     }
+
     private void initView() {
         orderID = (TextView) findViewById(R.id.id_order_id);
         name = (TextView) findViewById(R.id.id_order_name);
@@ -189,44 +190,21 @@ public class MsgActivity extends Activity {
         unwanchang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText inputServer = new EditText(MsgActivity.this);
-                inputServer.setMinLines(3);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MsgActivity.this);
-                builder.setTitle("请输入未完成原因：").setView(inputServer)
-                        .setNegativeButton("取消", null);
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
+                /*String[] areas = new String[]{"客户不在家","丢失物品","容量不足","不恰当的服务条件"
+                ,"付款问题","客户信息缺失","不正确或缺少图纸","缺失信息","丢失的文件","不正确的文章",
+                        "损坏物品","预测量不正确","销售错误","安装误差","客户需求变化"};
+                AlertDialog ad =new AlertDialog.Builder(MsgActivity.this).setTitle("请选择未完成类型：").setSingleChoiceItems(
+                        areas,1,null).setNegativeButton("取消",null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        String reason = inputServer.getText().toString().replaceAll( "\\s", "");
-                        ParserDetilXml pd = new ParserDetilXml("set",workID,"2",getsp2(),reason,null);
-                        pd.execute();
-                        pd.setOnDataFinishedListener(new OnDataFinishedListener() {
-                            @Override
-                            public void onDataSuccessfully(Object data) {
-                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
-                            @Override
-                            public void onDataFailed() {
-                                Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
-
-
+                        DialogForReason();
                     }
-                });
-                builder.show();
-
-
-
-
-
+                }).show();*/
+DialogForReason();
 
             }
         });
+
 
         Intent intent = getIntent();
         boolean flag =  intent.getBooleanExtra("order",false);
@@ -253,4 +231,38 @@ public class MsgActivity extends Activity {
             }
         });
     }
+
+    private void DialogForReason() {
+    final EditText inputServer = new EditText(MsgActivity.this);
+    inputServer.setMinLines(3);
+    AlertDialog.Builder builder = new AlertDialog.Builder(MsgActivity.this);
+    builder.setTitle("未完成原因备注：").setView(inputServer)
+            .setNegativeButton("取消", null);
+    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+        public void onClick(DialogInterface dialog, int which) {
+
+            String reason = inputServer.getText().toString().replaceAll( "\\s", "");
+            ParserDetilXml pd = new ParserDetilXml("set",workID,"2",getsp2(),reason,null);
+            pd.execute();
+            pd.setOnDataFinishedListener(new OnDataFinishedListener() {
+                @Override
+                public void onDataSuccessfully(Object data) {
+                    Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
+                @Override
+                public void onDataFailed() {
+                    Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+
+
+        }
+    });
+    builder.show();
+    }
+
 }

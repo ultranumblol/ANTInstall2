@@ -26,18 +26,22 @@ public class CheckLogin extends AsyncTask {
         SignMaker sm = new SignMaker();//实例化
         String sign =sm.getsign("username="+name,"userpassword="+pass, null);//通过用户名，密码制作sign
         Log.i("xml", "签名是：" + sign);
+
+        PostForInputstream pfi = new PostForInputstream();
+        InputStream is2 = pfi.CheckpassInputStream(name,pass,sign);
+
         CheckpassInputstream cpinputstream = new CheckpassInputstream();
-        InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, sign);
+        //InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, sign);
         //Log.i("xml", "isisisisis：" + is.toString());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if(is==null){
+        if(is2==null){
             String str ="请求错误！";
             return str;
         }else{
 
             int i;
             try {
-                while ((i = is.read()) != -1) {
+                while ((i = is2.read()) != -1) {
                     baos.write(i);
                 }
             } catch (IOException e) {

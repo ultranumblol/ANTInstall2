@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.wgz.ant.antinstall.bean.Worker;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
+import com.wgz.ant.antinstall.util.PostForInputstream;
 import com.wgz.ant.antinstall.util.SignMaker;
 import com.wgz.ant.antinstall.util.XmlInputStream;
 
@@ -34,11 +35,15 @@ public class ParserWorkerXml extends AsyncTask {
         wors = new ArrayList<Map<String,Object>>();
         SignMaker sm = new SignMaker();
         String sign= sm.getsign("username="+username,state);
-            XmlInputStream xmlInputStream = new XmlInputStream();
-        InputStream is = xmlInputStream.getStream(username,state+"",sign);
+        XmlInputStream xmlInputStream = new XmlInputStream();
+
+        PostForInputstream pfi = new PostForInputstream();
+        InputStream is2 =pfi.getStream(username,state+"",sign);
+
+        //InputStream is = xmlInputStream.getStream(username,state+"",sign);
         WorkerParser wparser = new PullPraserWorker();
         try {
-            mWorker = wparser.parse(is);
+            mWorker = wparser.parse(is2);
             for (Worker worker:mWorker){
                 Map<String, Object> map = new HashMap<String, Object>();
                 if (worker.getWorkID()==null){
