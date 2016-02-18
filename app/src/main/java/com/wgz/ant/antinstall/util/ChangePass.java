@@ -28,8 +28,12 @@ public class ChangePass extends AsyncTask {
         //通过用户名，密码制作sign
         String sign =sm.signCP("username="+name,"oldpassword="+oldpassword,"newpassword="+newpassword);
         Log.i("xml", "签名是：" + sign);
-        XmlInputStream xmlInputStream = new XmlInputStream();
-        InputStream is= xmlInputStream.getStream(name,oldpassword,newpassword,sign);
+
+        PostForInputstream postForInputstream = new PostForInputstream();
+        InputStream  is = postForInputstream.changePassInputStream(name,oldpassword,newpassword,sign);
+
+        //XmlInputStream xmlInputStream = new XmlInputStream();
+        //InputStream is= xmlInputStream.getStream(name,oldpassword,newpassword,sign);
         //Log.i("xml", "isisisisis：" + is.toString());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         if(is==null){

@@ -42,7 +42,7 @@ public class MsgFragment extends Fragment {
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //Log.i("xml","msggragment执行了回调刷新方法");
+        Log.i("xmll","Msgfragment执行了回调刷新,requestCode=="+requestCode+"resultCode=="+resultCode);
         String result = data.getExtras().getString("result");
         if(result.equals("该刷新了")){
 
@@ -61,7 +61,7 @@ public class MsgFragment extends Fragment {
                 intent.putExtra("workID",workid.getText().toString());
                 intent.setClass(getActivity(),MsgActivity.class);
 
-                startActivityForResult(intent,0);
+                startActivityForResult(intent,3);
             }
         });
         refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
@@ -89,7 +89,7 @@ public class MsgFragment extends Fragment {
     * */
     private void initData(){
         String username=getsp2();
-
+        Log.i("xmll","msgfragmentflush!!!");
         ParserWorkerXml pw = new ParserWorkerXml(username,0);
         pw.execute();
         pw.setOnDataFinishedListener(new OnDataFinishedListener() {

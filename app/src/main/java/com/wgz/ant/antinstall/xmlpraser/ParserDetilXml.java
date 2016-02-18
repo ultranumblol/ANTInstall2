@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.wgz.ant.antinstall.bean.Detail;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
+import com.wgz.ant.antinstall.util.PostForInputstream;
 import com.wgz.ant.antinstall.util.SignMaker;
-import com.wgz.ant.antinstall.util.XmlInputStream;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -47,13 +47,17 @@ public class ParserDetilXml extends AsyncTask {
 
             String sign = sm.getsign("type="+type,"id="+id);
             sign1=sign;
-            XmlInputStream xmlInputStream = new XmlInputStream();
-            InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
+            PostForInputstream pfi = new PostForInputstream();
+            InputStream is2 =pfi.getStream2(type,id,state,sign1,username,remark,code);
+
+
+            //XmlInputStream xmlInputStream = new XmlInputStream();
+            //InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             DetailPraser dp = new PullPraserDetail();
             try {
-                mdetail = dp.parse(is);
+                mdetail = dp.parse(is2);
                 for (Detail detail:mdetail){
                     Map<String, Object> map = new HashMap<String, Object>();
                     if (detail.getName()==null){
@@ -145,18 +149,22 @@ public class ParserDetilXml extends AsyncTask {
         }if(remark==null&&state!=null&&code==null) {
             String sign = sm.getsign("type="+type,"id="+id,"state="+state);
             sign1=sign;
-            XmlInputStream xmlInputStream = new XmlInputStream();
-            InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
+
+            PostForInputstream pfi = new PostForInputstream();
+            InputStream is2 =pfi.getStream2(type,id,state,sign1,username,remark,code);
+
+            //XmlInputStream xmlInputStream = new XmlInputStream();
+            //InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            if(is==null){
+            if(is2==null){
                 String str ="请求错误！";
                 return str;
             }else{
 
                 int i;
                 try {
-                    while ((i = is.read()) != -1) {
+                    while ((i = is2.read()) != -1) {
                         baos.write(i);
                     }
                 } catch (IOException e) {
@@ -171,19 +179,23 @@ public class ParserDetilXml extends AsyncTask {
         if (remark!=null&&code==null){
             String sign = sm.getsign("type="+type,"id="+id,"state="+state,"username="+username,"remark="+remark);
             sign1=sign;
-            XmlInputStream xmlInputStream = new XmlInputStream();
-            InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
+
+            PostForInputstream pfi = new PostForInputstream();
+            InputStream is2 =pfi.getStream2(type,id,state,sign1,username,remark,code);
+
+            //XmlInputStream xmlInputStream = new XmlInputStream();
+            //InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-            if(is==null){
+            if(is2==null){
                 String str ="请求错误！";
                 return str;
             }else{
 
                 int i;
                 try {
-                    while ((i = is.read()) != -1) {
+                    while ((i = is2.read()) != -1) {
                         baos.write(i);
                     }
                 } catch (IOException e) {
@@ -194,24 +206,27 @@ public class ParserDetilXml extends AsyncTask {
                 return str;
 
             }
-        }if (remark==null&&code!=null&&state!=null){
+        }if (remark!=null&&code!=null&&state!=null){
 
             Log.i("xml","codecodecodecode");
-            String sign = sm.getsignCode("type="+type,"id="+id,"state="+state,"code="+code);
+            String sign = sm.getsignCode("type="+type,"id="+id,"state="+state,"code="+code,"remark="+remark);
             sign1=sign;
-            XmlInputStream xmlInputStream = new XmlInputStream();
-            InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
+            PostForInputstream pfi = new PostForInputstream();
+            InputStream is2 =pfi.getStream2(type,id,state,sign1,username,remark,code);
+
+            //XmlInputStream xmlInputStream = new XmlInputStream();
+            //InputStream is = xmlInputStream.getStream(type,id,state,sign1,username,remark,code);
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-            if(is==null){
+            if(is2==null){
                 String str ="请求错误！";
                 return str;
             }else{
 
                 int i;
                 try {
-                    while ((i = is.read()) != -1) {
+                    while ((i = is2.read()) != -1) {
                         baos.write(i);
                     }
                 } catch (IOException e) {

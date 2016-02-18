@@ -34,7 +34,7 @@ public class OrderFragment extends Fragment {
     private TextView tuotou,untuotou;
     private ListView tuotoulv,untuotoulv;
     private RefreshableView refreshableView2,refreshableView3;
-private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>();
+    private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.orderfragment,null);
@@ -49,14 +49,8 @@ private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>()
         untuotou = (TextView) view.findViewById(R.id.untuotou_tv);
         tuotoulv = (ListView) view.findViewById(R.id.tuotou_lv);
         untuotoulv = (ListView) view.findViewById(R.id.untuotou_lv);
-        //tuotoulv.setAdapter(new OrderAdapter(testData(),getActivity()));
-        //untuotoulv.setAdapter(new OrderAdapter(testData2(),getActivity()));
         initData();
         initData2();
-        /*tuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData(),R.layout.order_lv_item,
-                new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));
-        untuotoulv.setAdapter(new SimpleAdapter(getActivity().getApplicationContext(),testData2(),R.layout.order_lv_item,
-                new String[]{"id","title","type"},new int[]{R.id.order_id,R.id.order_content,R.id.order_type}));*/
         tuotoulv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -146,10 +140,10 @@ private List<Map<String, Object>> listDATA = new ArrayList<Map<String,Object>>()
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        Log.i("xmll","orderfragment执行了回调刷新,requestCode=="+requestCode+"resultCode=="+resultCode);
         String result = data.getExtras().getString("result");
         if(result.equals("该刷新了")){
-           initData2();
+            initData2();
             initData();
         }
     }

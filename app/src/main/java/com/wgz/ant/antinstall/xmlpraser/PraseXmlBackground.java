@@ -3,8 +3,8 @@ package com.wgz.ant.antinstall.xmlpraser;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.wgz.ant.antinstall.util.PostForInputstream;
 import com.wgz.ant.antinstall.util.SignMaker;
-import com.wgz.ant.antinstall.util.XmlInputStream;
 
 import org.dom4j.DocumentException;
 
@@ -35,7 +35,7 @@ public class PraseXmlBackground extends AsyncTask {
         try {
             SignMaker sm = new SignMaker();
             String sign = sm.getsign("type="+type,"id="+id);
-           mData= px.prase(new XmlInputStream().getStream(type,id,state,sign,username,remark,code));
+           mData= px.prase(new PostForInputstream().getStream(username,state,sign));
             Log.i("xxml","Mdata:"+mData.toString());
 
         } catch (DocumentException e) {

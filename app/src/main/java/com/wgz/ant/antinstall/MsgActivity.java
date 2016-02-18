@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -33,7 +35,8 @@ public class MsgActivity extends Activity {
     private LinearLayout btnlay;
     private TextView title,wancheng,unwanchang,showinmap;
     private TextView orderID,name,phone,servType,address,money,delivery,azreservation;
-    private String workID;
+    private String workID,daohangAdd="";
+    private boolean isDaohang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +103,28 @@ public class MsgActivity extends Activity {
     }
     @Override
     public void finish() {
-        //数据是使用Intent返回
-        Intent intent = new Intent();
-        //把返回数据存入Intent
-        intent.putExtra("result", "该刷新了");
-        //设置返回数据
-        setResult(RESULT_OK, intent);
-        super.finish();
+        if (isDaohang){
+            //数据是使用Intent返回
+            Intent intent = new Intent();
+            //把返回数据存入Intent
+            intent.putExtra("result", "导航");
+            intent.putExtra("address", daohangAdd);
+            //设置返回数据
+            setResult(RESULT_OK, intent);
+            super.finish();
+        }else {
+            //数据是使用Intent返回
+            Intent intent = new Intent();
+            //把返回数据存入Intent
+            intent.putExtra("result", "该刷新了");
+            //设置返回数据
+            setResult(RESULT_OK, intent);
+            super.finish();
+
+        }
+
+
+
     }
     public void onResume() {
         super.onResume();
@@ -137,6 +155,26 @@ public class MsgActivity extends Activity {
         wancheng = (TextView) findViewById(R.id.Tv_wancheng);
         unwanchang = (TextView) findViewById(R.id.Tv_unwancheng);
         showinmap = (TextView) findViewById(R.id.Tv_showInMap);
+        //点击号码拨打电话
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri
+                        .parse("tel:" +phone.getText().toString() ));
+                startActivity(dialIntent);
+
+            }
+        });
+        isDaohang=false;
+        //点击地址导航
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                daohangAdd = address.getText().toString();
+                isDaohang=true;
+                finish();
+            }
+        });
         showinmap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,12 +189,33 @@ public class MsgActivity extends Activity {
             @Override
             public void onClick(View v) {
                 final EditText inputServer = new EditText(MsgActivity.this);
+                LayoutInflater layoutInflater = LayoutInflater.from(MsgActivity.this);
+                final View view = layoutInflater.inflate(R.layout.dialog_code_remark,null);
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(MsgActivity.this);
-                builder.setTitle("确认完成").setMessage("请输入验证码确认：").setView(inputServer).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setTitle("确认完成").setView(view).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String code = inputServer.getText().toString().replaceAll( "\\s", "");
-                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,null,code);
+                        EditText mCode = (EditText) view.findViewById(R.id.id_complate_code);
+                        EditText mRemark = (EditText) view.findViewById(R.id.id_complate_remark);
+                        String remark2 = "";
+                        String code2 = "";
+                        if (mRemark.getText()==null){
+                            String remark = "---";
+                            String code = mCode.getText().toString().replaceAll( "\\s", "");
+                            remark2 = remark;
+                            code2 = code;
+                        }else {
+                            String code = mCode.getText().toString().replaceAll( "\\s", "");
+                            String remark = mRemark.getText().toString().replaceAll( "\\s", "");
+                            remark2 = remark;
+                            code2 = code;
+                        }
+
+
+
+                        ParserDetilXml pd = new ParserDetilXml("set",workID,"1",null,remark2,code2);
                         pd.execute();
                         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
                             @Override
@@ -164,16 +223,12 @@ public class MsgActivity extends Activity {
                                 Toast.makeText(MsgActivity.this,"操作完成",Toast.LENGTH_SHORT).show();
                                 MsgActivity.this.finish();
                             }
-
                             @Override
                             public void onDataFailed() {
                                 Toast.makeText(MsgActivity.this,"验证码有误",Toast.LENGTH_SHORT).show();
                                 //MsgActivity.this.finish();
                             }
                         });
-
-
-
                     }
                 }).setNegativeButton("取消",null);
                 builder.show();

@@ -30,7 +30,7 @@ public class CheckLogin extends AsyncTask {
         PostForInputstream pfi = new PostForInputstream();
         InputStream is2 = pfi.CheckpassInputStream(name,pass,sign);
 
-        CheckpassInputstream cpinputstream = new CheckpassInputstream();
+        //CheckpassInputstream cpinputstream = new CheckpassInputstream();
         //InputStream is= cpinputstream.getStream("username="+name,"userpassword="+pass, sign);
         //Log.i("xml", "isisisisis：" + is.toString());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

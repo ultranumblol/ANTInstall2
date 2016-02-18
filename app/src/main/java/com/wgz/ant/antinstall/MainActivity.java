@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -34,8 +35,7 @@ public class MainActivity extends FragmentActivity {
     private PersonFragment personFragment;
     private OrderFragment orderFragment;
     private MapFragment2 mapFragment2;
-    //爆炸区域
-   // private ExplosionField mExplosionField;
+    private MyFragmentPagerAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,56 +44,45 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_antinsatll);
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
-       // mExplosionField = ExplosionField.attach2Window(this);
-       // addListener(findViewById(R.id.root));
         initview();
 
     }
 
-    /*private void addListener(View root) {
-        if (root instanceof ViewGroup) {
-            ViewGroup parent = (ViewGroup) root;
-            for (int i = 0; i < parent.getChildCount(); i++) {
-                addListener(parent.getChildAt(i));
-            }
-        } else {
-            root.setClickable(true);
-            root.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mExplosionField.explode(v);
-                    v.setOnClickListener(null);
-                }
-            });
-        }
-    }*/
-
-   /* @Override
-    protected void onRestart() {
-        super.onRestart();
-        bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        mainviewpager.setCurrentItem(0);
-        bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //String result = data.getExtras().getString("result");
+        String result = data.getExtras().getString("result");
+        if(result.equals("该刷新了")){
+            Log.i("xmll",",msgFragment--id=="+adapter.getItem(0).getId());
+            Log.i("xmll",",orderFragment--id=="+adapter.getItem(1).getId());
+            Fragment f = getSupportFragmentManager().findFragmentById(adapter.getItem(1).getId());
+            f.onActivityResult(requestCode, resultCode, data);
+            //initData();
+        }
+        if(result.equals("导航")){
+           //String address = data.getExtras().getString("address");
+            initview();
+            bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+            bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+            bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+            bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+            mainviewpager.setCurrentItem(2);
+            Log.i("xmll",",MapFragment--id=="+fragments.get(0).getId());
+            Log.i("xmll",",MapFragment--id=="+fragments.get(1).getId());
+            Log.i("xmll",",MapFragment--id=="+fragments.get(2).getId());
+            Log.i("xmll",",MapFragment--id=="+fragments.get(3).getId());
+            bar3.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+            Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(2).getId());
+            f.onActivityResult(requestCode, resultCode, data);
+        }
 
-       Fragment f2 = getSupportFragmentManager().findFragmentById(fragments.get(1).getId());
-       f2.onActivityResult(requestCode, resultCode, data);
-        Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(0).getId());
-        f.onActivityResult(requestCode, resultCode, data);
     }
     public void initview() {
-         msgFragment = new MsgFragment();
+        msgFragment = new MsgFragment();
         mapFragment = new MapFragment();
         orderFragment = new OrderFragment();
         personFragment = new PersonFragment();
         mapFragment2 = new MapFragment2();
+
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
         bar1= (LinearLayout) findViewById(R.id.bar1);
         bar2= (LinearLayout) findViewById(R.id.bar2);
@@ -112,7 +101,9 @@ public class MainActivity extends FragmentActivity {
         fragments.add(orderFragment);
         fragments.add(mapFragment2);
         fragments.add(personFragment);
-        mainviewpager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
+        adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
+
+        mainviewpager.setAdapter(adapter);
         mainviewpager.setCurrentItem(0);
         barimg1.setImageResource(R.drawable.bar11);
         bartv1.setTextColor(Color.WHITE);
@@ -152,8 +143,8 @@ public class MainActivity extends FragmentActivity {
                 mainviewpager.setCurrentItem(3);
                 bar4.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
                 break;
-                default:
-                    break;
+            default:
+                break;
 
         }
 

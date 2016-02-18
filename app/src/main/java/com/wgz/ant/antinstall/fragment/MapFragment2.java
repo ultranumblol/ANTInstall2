@@ -1,8 +1,10 @@
 package com.wgz.ant.antinstall.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,29 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
 
         return  view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String result = data.getExtras().getString("result");
+        String address = data.getExtras().getString("address");
+        Log.i("xmll","Map导航回调"+address);
+        if(result.equals("导航")){
+
+            Log.i("xmll",",Daohang_address====="+address);
+            //重置浏览节点的路线数据
+            route = null;
+            mBaidumap.clear();
+            // 处理搜索按钮响应
+            //设置起终点信息，对于tranist search 来说，城市名无意义
+            PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", editSt.getText().toString());
+            editEn.setText(address);
+            PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都", address);
+            mSearch.walkingSearch((new WalkingRoutePlanOption())
+                    .from(stNode)
+                    .to(enNode));
+        }
+    }
+
     //定位到我的位置
     private void CenterToMyLocation() {
         LatLng latLng = new LatLng(mLatitude,mLongtitude);
