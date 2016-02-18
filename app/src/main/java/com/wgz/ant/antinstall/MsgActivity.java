@@ -36,7 +36,6 @@ public class MsgActivity extends Activity {
     private TextView title,wancheng,unwanchang,showinmap;
     private TextView orderID,name,phone,servType,address,money,delivery,azreservation;
     private String workID,daohangAdd="";
-    private boolean isDaohang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,16 +102,6 @@ public class MsgActivity extends Activity {
     }
     @Override
     public void finish() {
-        if (isDaohang){
-            //数据是使用Intent返回
-            Intent intent = new Intent();
-            //把返回数据存入Intent
-            intent.putExtra("result", "导航");
-            intent.putExtra("address", daohangAdd);
-            //设置返回数据
-            setResult(RESULT_OK, intent);
-            super.finish();
-        }else {
             //数据是使用Intent返回
             Intent intent = new Intent();
             //把返回数据存入Intent
@@ -120,11 +109,6 @@ public class MsgActivity extends Activity {
             //设置返回数据
             setResult(RESULT_OK, intent);
             super.finish();
-
-        }
-
-
-
     }
     public void onResume() {
         super.onResume();
@@ -165,14 +149,14 @@ public class MsgActivity extends Activity {
 
             }
         });
-        isDaohang=false;
         //点击地址导航
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                daohangAdd = address.getText().toString();
-                isDaohang=true;
-                finish();
+                Intent intent = new Intent();
+                intent.putExtra("endAddress",address.getText().toString());
+                intent.setClass(MsgActivity.this,NewMapActivity.class);
+                startActivity(intent);
             }
         });
         showinmap.setOnClickListener(new View.OnClickListener() {

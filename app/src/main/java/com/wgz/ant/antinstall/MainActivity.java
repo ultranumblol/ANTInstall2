@@ -1,11 +1,9 @@
 package com.wgz.ant.antinstall;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -48,40 +46,42 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String result = data.getExtras().getString("result");
-        if(result.equals("该刷新了")){
-            Log.i("xmll",",msgFragment--id=="+adapter.getItem(0).getId());
-            Log.i("xmll",",orderFragment--id=="+adapter.getItem(1).getId());
-            Fragment f = getSupportFragmentManager().findFragmentById(adapter.getItem(1).getId());
-            f.onActivityResult(requestCode, resultCode, data);
-            //initData();
-        }
-        if(result.equals("导航")){
-           //String address = data.getExtras().getString("address");
-            initview();
-            bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-            bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-            bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-            bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-            mainviewpager.setCurrentItem(2);
-            Log.i("xmll",",MapFragment--id=="+fragments.get(0).getId());
-            Log.i("xmll",",MapFragment--id=="+fragments.get(1).getId());
-            Log.i("xmll",",MapFragment--id=="+fragments.get(2).getId());
-            Log.i("xmll",",MapFragment--id=="+fragments.get(3).getId());
-            bar3.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
-            Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(2).getId());
-            f.onActivityResult(requestCode, resultCode, data);
-        }
-
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        String result = data.getExtras().getString("result");
+//        if(result.equals("该刷新了")){
+//            Log.i("xmll",",msgFragment--id=="+adapter.getItem(0).getId());
+//            Log.i("xmll",",orderFragment--id=="+adapter.getItem(1).getId());
+//            Fragment f = getSupportFragmentManager().findFragmentById(adapter.getItem(1).getId());
+//            f.onActivityResult(requestCode, resultCode, data);
+//            //initData();
+//        }
+//        if(result.equals("导航")){
+//           /*//String address = data.getExtras().getString("address");
+//            bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+//            bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+//            bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+//            bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
+//            mainviewpager.setCurrentItem(2);
+//            Log.i("xmll",",fragments.size=="+fragments.size());
+//            Log.i("xmll",",MapFragment--id=="+fragments.get(0).getId());
+//            Log.i("xmll",",MapFragment--id=="+fragments.get(1).getId());
+//            Log.i("xmll",",MapFragment--id=="+fragments.get(2).getId());
+//            Log.i("xmll",",MapFragment--id=="+fragments.get(3).getId());
+//            bar3.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+//            Fragment f = getSupportFragmentManager().findFragmentById(fragments.get(2).getId());
+//            f.onActivityResult(requestCode, resultCode, data);*/
+//        }
+//
+//    }
     public void initview() {
+
         msgFragment = new MsgFragment();
         mapFragment = new MapFragment();
         orderFragment = new OrderFragment();
         personFragment = new PersonFragment();
         mapFragment2 = new MapFragment2();
+
 
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
         bar1= (LinearLayout) findViewById(R.id.bar1);
@@ -103,11 +103,15 @@ public class MainActivity extends FragmentActivity {
         fragments.add(personFragment);
         adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
 
+
+
         mainviewpager.setAdapter(adapter);
-        mainviewpager.setCurrentItem(0);
-        barimg1.setImageResource(R.drawable.bar11);
-        bartv1.setTextColor(Color.WHITE);
-        bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+
+
+            mainviewpager.setCurrentItem(0);
+            barimg1.setImageResource(R.drawable.bar11);
+            bartv1.setTextColor(Color.WHITE);
+            bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
     }
     public void onResume() {
         super.onResume();

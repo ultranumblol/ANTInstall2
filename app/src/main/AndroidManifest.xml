@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
+            android:launchMode="singleTask"
             ></activity>
         <activity android:name=".OrderActivity"></activity>
         <activity android:name=".RoutePlanDemo"></activity>

@@ -40,15 +40,15 @@ public class MsgFragment extends Fragment {
 
         return view;
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("xmll","Msgfragment执行了回调刷新,requestCode=="+requestCode+"resultCode=="+resultCode);
-        String result = data.getExtras().getString("result");
-        if(result.equals("该刷新了")){
-
-            initData();
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.i("xmll","Msgfragment执行了回调刷新,requestCode=="+requestCode+"resultCode=="+resultCode);
+//        String result = data.getExtras().getString("result");
+//        if(result.equals("该刷新了")){
+//
+//            initData();
+//        }
+//    }
     private void initview(View view) {
         msglv = (ListView) view .findViewById(R.id.msg_lv);
         refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);

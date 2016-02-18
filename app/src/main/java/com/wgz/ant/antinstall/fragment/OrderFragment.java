@@ -138,15 +138,15 @@ public class OrderFragment extends Fragment {
         String flag = preferences.getString("username", "false");
         return flag;
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i("xmll","orderfragment执行了回调刷新,requestCode=="+requestCode+"resultCode=="+resultCode);
-        String result = data.getExtras().getString("result");
-        if(result.equals("该刷新了")){
-            initData2();
-            initData();
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.i("xmll","orderfragment执行了回调刷新,requestCode=="+requestCode+"resultCode=="+resultCode);
+//        String result = data.getExtras().getString("result");
+//        if(result.equals("该刷新了")){
+//            initData2();
+//            initData();
+//        }
+//    }
     /*
     * 初始化数据
     * */
