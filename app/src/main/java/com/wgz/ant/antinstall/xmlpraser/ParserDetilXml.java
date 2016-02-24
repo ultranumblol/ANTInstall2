@@ -136,6 +136,20 @@ public class ParserDetilXml extends AsyncTask {
 
                         map.put("servicestype",detail.getServicestype());
                     }
+                    if (detail.getPilot()==null){
+                        map.put("pilot","---");
+                    }else {
+
+                        map.put("pilot",detail.getPilot());
+                    }
+
+                    if (detail.getPilotphone()==null){
+                        map.put("pilotphone","---");
+                    }else {
+
+                        map.put("pilotphone",detail.getPilotphone());
+                    }
+
 
                     dets.add(map);
 

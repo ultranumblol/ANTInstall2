@@ -17,6 +17,25 @@ public class Detail {
     private String delivery;
     private String serverType;
     private String servicestype;
+    private String pilot;
+    private String pilotphone;
+
+    public void setPilot(String pilot) {
+        this.pilot = pilot;
+    }
+
+    public void setPilotphone(String pilotphone) {
+        this.pilotphone = pilotphone;
+    }
+
+    public String getPilot() {
+
+        return pilot;
+    }
+
+    public String getPilotphone() {
+        return pilotphone;
+    }
 
     public String getServicestype() {
         return servicestype;
@@ -140,6 +159,18 @@ public class Detail {
                 ", price='" + price + '\'' +
                 ", count='" + count + '\'' +
                 ", type='" + type + '\'' +
+                ", goodname='" + goodname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", date='" + date + '\'' +
+                ", aznumber='" + aznumber + '\'' +
+                ", azreservation='" + azreservation + '\'' +
+                ", delivery='" + delivery + '\'' +
+                ", serverType='" + serverType + '\'' +
+                ", servicestype='" + servicestype + '\'' +
+                ", pilot='" + pilot + '\'' +
+                ", pilotphone='" + pilotphone + '\'' +
+                ", goodsmoeny='" + goodsmoeny + '\'' +
                 '}';
     }
 }

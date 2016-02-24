@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -20,8 +21,11 @@ import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wgz.ant.antinstall.util.OnDataFinishedListener;
+import com.wgz.ant.antinstall.xmlpraser.AsynCallBack;
 import com.wgz.ant.antinstall.xmlpraser.ParserDetilXml;
+import com.wgz.ant.antinstall.xmlpraser.PraseXmlBackground;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +38,7 @@ public class MsgActivity extends Activity {
     private ListView msg_lv;
     private LinearLayout btnlay;
     private TextView title,wancheng,unwanchang,showinmap;
-    private TextView orderID,name,phone,servType,address,money,delivery,azreservation;
+    private TextView orderID,name,phone,servType,address,money,delivery,azreservation,pilot,pilotphone;
     private String workID,daohangAdd="";
 
     @Override
@@ -51,21 +55,47 @@ public class MsgActivity extends Activity {
         Intent intent = getIntent();
 
         workID = intent.getStringExtra("workID");
-/*//通用解析
+//通用解析
         PraseXmlBackground pxb = new PraseXmlBackground("get",workID,null,null,null,null);
         pxb.execute();
         pxb.setOnDataCallBack(new AsynCallBack() {
             @Override
             public void onDatasucess(Object data) {
-                Toast.makeText(getApplicationContext(),"成功",Toast.LENGTH_SHORT).show();
+                List<Map<String, Object>> list1 = new ArrayList<Map<String,Object>>();
+                list1= (List<Map<String, Object>>) data;
+                orderID.setText(list1.get(0).get("aznumber").toString());
+                name.setText(list1.get(0).get("name").toString());
+                phone.setText(list1.get(0).get("phone1").toString());
+
+                address.setText(list1.get(0).get("address").toString());
+
+                double money3=Double.parseDouble(list1.get(0).get("price").toString());
+                String money2 =formatDouble4(money3);
+                money.setText(money2);
+                azreservation.setText(list1.get(0).get("azreservation").toString());
+                delivery.setText(list1.get(0).get("delivery").toString());
+                servType.setText(list1.get(0).get("servertype").toString());
+                pilot.setText(list1.get(0).get("pilot").toString());
+                pilotphone.setText(list1.get(0).get("pilotphone").toString());
+
+
+                msg_lv.setAdapter(new SimpleAdapter(MsgActivity.this,list1,R.layout.goods_lv_item,new String[]{"name1","quantity","goodsmoney","servicestype"},
+
+                        new int[]{R.id.id_goods_name,R.id.id_goods_num,R.id.id_goods_price,R.id.id_goods_type}));
+
+
+
+                Log.i("xmll","list1====="+list1.toString());
             }
 
             @Override
             public void onDatafaild() {
                 Toast.makeText(getApplicationContext(),"1111",Toast.LENGTH_SHORT).show();
             }
-        });*/
-        ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null,null);
+        });
+
+
+        /*ParserDetilXml pd = new ParserDetilXml("get",workID,null,null,null,null);
         pd.execute();
         pd.setOnDataFinishedListener(new OnDataFinishedListener() {
             @Override
@@ -81,7 +111,8 @@ public class MsgActivity extends Activity {
                 azreservation.setText(list1.get(0).get("azreservation").toString());
                 delivery.setText(list1.get(0).get("delivery").toString());
                 servType.setText(list1.get(0).get("servertype").toString());
-
+                pilot.setText(list1.get(0).get("pilot").toString());
+                pilotphone.setText(list1.get(0).get("pilotphone").toString());
 
 
                 msg_lv.setAdapter(new SimpleAdapter(MsgActivity.this,list1,R.layout.goods_lv_item,new String[]{"name1","quantity","goodsmoney","servicestype"},
@@ -90,15 +121,21 @@ public class MsgActivity extends Activity {
 
 
 
-                //Log.i("xml","msg====="+list1.toString());
+                Log.i("xmll","list1====="+list1.toString());
             }
 
             @Override
             public void onDataFailed() {
 
             }
-        });
+        });*/
 
+    }
+    public static String formatDouble4(double d) {
+        DecimalFormat df = new DecimalFormat("#.00");
+
+
+        return df.format(d);
     }
     @Override
     public void finish() {
@@ -133,7 +170,8 @@ public class MsgActivity extends Activity {
         money = (TextView) findViewById(R.id.id_order_anzhuangfei);
         azreservation = (TextView) findViewById(R.id.id_order_preTime);
         delivery = (TextView) findViewById(R.id.id_order_time);
-
+        pilot = (TextView) findViewById(R.id.id_pilot_name);
+        pilotphone = (TextView) findViewById(R.id.id__pilot_phone);
 
         title = (TextView) findViewById(R.id.msg_title);
         wancheng = (TextView) findViewById(R.id.Tv_wancheng);
@@ -143,12 +181,46 @@ public class MsgActivity extends Activity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri
-                        .parse("tel:" +phone.getText().toString() ));
-                startActivity(dialIntent);
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MsgActivity.this);
+                dialog.setTitle("请确认").setMessage("是否拨打电话？").setNegativeButton("取消",null)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri
+                                        .parse("tel:" +phone.getText().toString() ));
+                                startActivity(dialIntent);
+                            }
+                        });
+                dialog.show();
+
+
 
             }
         });
+
+        //点击驾驶员号码拨打电话
+        pilotphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MsgActivity.this);
+                dialog.setTitle("请确认").setMessage("是否拨打电话？").setNegativeButton("取消",null)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent dialIntent = new Intent(Intent.ACTION_CALL, Uri
+                                        .parse("tel:" +phone.getText().toString() ));
+                                startActivity(dialIntent);
+                            }
+                        });
+                dialog.show();
+
+
+
+            }
+        });
+
         //点击地址导航
         address.setOnClickListener(new View.OnClickListener() {
             @Override

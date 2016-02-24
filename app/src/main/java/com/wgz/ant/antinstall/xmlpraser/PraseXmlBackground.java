@@ -8,6 +8,7 @@ import com.wgz.ant.antinstall.util.SignMaker;
 
 import org.dom4j.DocumentException;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +36,9 @@ public class PraseXmlBackground extends AsyncTask {
         try {
             SignMaker sm = new SignMaker();
             String sign = sm.getsign("type="+type,"id="+id);
-           mData= px.prase(new PostForInputstream().getStream(username,state,sign));
+            PostForInputstream pfi = new PostForInputstream();
+            InputStream is2 =pfi.getStream2(type,id,state,sign,username,remark,code);
+           mData= px.prase(is2);
             Log.i("xxml","Mdata:"+mData.toString());
 
         } catch (DocumentException e) {
@@ -51,9 +54,9 @@ public void  setOnDataCallBack(AsynCallBack asynCallBack){
 }
     @Override
     protected void onPostExecute(Object o) {
-        Log.i("xxml","o======="+o.toString());
+       // Log.i("xxml","o======="+o.toString());
         List<Map<String, Object>> result = (List<Map<String, Object>>) o;
-        Log.i("xxml","result:"+result.toString());
+        //Log.i("xxml","result:"+result.toString());
         asynCallBack.onDatasucess(result);
     }
 }

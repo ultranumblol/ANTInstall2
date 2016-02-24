@@ -85,6 +85,14 @@ public class PullPraserDetail implements DetailPraser {
                         event=pullParser.next();
                         datails.setServicestype(pullParser.getText());
                     }
+                    else if (pullParser.getName().equals("pilot")) {
+                        event=pullParser.next();
+                        datails.setPilot(pullParser.getText());
+                    }
+                    else if (pullParser.getName().equals("pilotphone")) {
+                        event=pullParser.next();
+                        datails.setPilotphone(pullParser.getText());
+                    }
 
 
                     break;
