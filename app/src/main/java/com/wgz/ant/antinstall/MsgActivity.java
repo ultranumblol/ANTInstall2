@@ -75,8 +75,25 @@ public class MsgActivity extends Activity {
                 azreservation.setText(list1.get(0).get("azreservation").toString());
                 delivery.setText(list1.get(0).get("delivery").toString());
                 servType.setText(list1.get(0).get("servertype").toString());
-                pilot.setText(list1.get(0).get("pilot").toString());
-                pilotphone.setText(list1.get(0).get("pilotphone").toString());
+                try {
+                    String pilophone1 =  list1.get(0).get("pilot").toString();
+                    pilot.setText(pilophone1);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                    String pilophone1 =  "---";
+                    pilot.setText(pilophone1);
+                }
+                try {
+                   String pilophone1 =  list1.get(0).get("pilotphone").toString();
+                    pilotphone.setText(pilophone1);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                    String pilophone1 =  "---";
+                    pilotphone.setText(pilophone1);
+                }
+
 
 
                 msg_lv.setAdapter(new SimpleAdapter(MsgActivity.this,list1,R.layout.goods_lv_item,new String[]{"name1","quantity","goodsmoney","servicestype"},
