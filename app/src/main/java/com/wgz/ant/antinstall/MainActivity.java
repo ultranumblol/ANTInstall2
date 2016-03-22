@@ -1,13 +1,11 @@
 package com.wgz.ant.antinstall;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -23,7 +21,7 @@ import com.wgz.ant.antinstall.view.CustomViewPager;
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
-    private LinearLayout bar1,bar2,bar3,bar4;
+    private ImageView bar1,bar2,bar3,bar4;
     private TextView bartv1,bartv2,bartv3,bartv4;
     private ImageView barimg1,barimg2,barimg3,barimg4;
     private ArrayList<Fragment> fragments;//页面列表
@@ -84,18 +82,10 @@ public class MainActivity extends FragmentActivity {
 
 
         mainviewpager = (CustomViewPager) findViewById(R.id.viewpager);
-        bar1= (LinearLayout) findViewById(R.id.bar1);
-        bar2= (LinearLayout) findViewById(R.id.bar2);
-        bar3= (LinearLayout) findViewById(R.id.bar3);
-        bar4= (LinearLayout) findViewById(R.id.bar4);
-        barimg1 = (ImageView) findViewById(R.id.mainbar_img1);
-        barimg2 = (ImageView) findViewById(R.id.mainbar_img2);
-        barimg3 = (ImageView) findViewById(R.id.mainbar_img3);
-        barimg4 = (ImageView) findViewById(R.id.mainbar_img4);
-        bartv1 = (TextView) findViewById(R.id.mainbar1);
-        bartv2 = (TextView) findViewById(R.id.mainbar2);
-        bartv3 = (TextView) findViewById(R.id.mainbar3);
-        bartv4 = (TextView) findViewById(R.id.mainbar4);
+        bar1= (ImageView) findViewById(R.id.bar1);
+        bar2= (ImageView) findViewById(R.id.bar2);
+        bar3= (ImageView) findViewById(R.id.bar3);
+        bar4= (ImageView) findViewById(R.id.bar4);
         fragments = new ArrayList<Fragment>();
         fragments.add(msgFragment);
         fragments.add(orderFragment);
@@ -109,9 +99,8 @@ public class MainActivity extends FragmentActivity {
 
 
             mainviewpager.setCurrentItem(0);
-            barimg1.setImageResource(R.drawable.bar11);
-            bartv1.setTextColor(Color.WHITE);
-            bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+
+        bar1.setImageResource(R.drawable.foot_letter_pressed);
     }
     public void onResume() {
         super.onResume();
@@ -123,29 +112,29 @@ public class MainActivity extends FragmentActivity {
     }
 
     public  void BaronClick(View view){
+        bar1.setImageResource(R.drawable.foot_letter_normal);
+        bar2.setImageResource(R.drawable.foot_position_normal2);
+        bar3.setImageResource(R.drawable.foot_ask_normal2);
+        bar4.setImageResource(R.drawable.foot_myself_normal);
 
-        bar1.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        bar2.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        bar3.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
-        bar4.setBackgroundColor(android.graphics.Color.parseColor("#000000"));
 
         int id = view .getId();
         switch (id){
             case  R.id.bar1:
                 mainviewpager.setCurrentItem(0);
-                bar1.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+                bar1.setImageResource(R.drawable.foot_letter_pressed);
                 break;
             case R.id.bar2:
                 mainviewpager.setCurrentItem(1);
-                bar2.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+                bar2.setImageResource(R.drawable.foot_position_pressed2);
                 break;
             case R.id.bar3:
                 mainviewpager.setCurrentItem(2);
-                bar3.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+                bar3.setImageResource(R.drawable.foot_ask_pressed2);
                 break;
             case R.id.bar4:
                 mainviewpager.setCurrentItem(3);
-                bar4.setBackgroundColor(android.graphics.Color.parseColor("#00A1E9"));
+                bar4.setImageResource(R.drawable.foot_myself_pressed);
                 break;
             default:
                 break;

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -51,7 +52,6 @@ import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.baidu.mapapi.utils.OpenClientUtil;
-import com.baidu.mapapi.utils.route.RouteParaOption;
 import com.umeng.analytics.MobclickAgent;
 import com.wgz.ant.antinstall.overlayutil.DrivingRouteOverlay;
 import com.wgz.ant.antinstall.overlayutil.OverlayManager;
@@ -105,6 +105,7 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
             openGPS(this);
 
         }
+       // CenterToMyLocation();
     }
 
     private void initsearch() {
@@ -118,13 +119,24 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         GERSearch();
         // 处理搜索按钮响应
         //设置起终点信息，对于tranist search 来说，城市名无意义
-        PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", myLocation);
-        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都",endaddress );
+       /* PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", myLocation);
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都", endaddress);
 
         mSearch.walkingSearch((new WalkingRoutePlanOption())
                 .from(stNode)
-                .to(enNode));
+                .to(enNode));*/
+        //坐标搜索
+       /* LatLng latLng = new LatLng(mLatitude,mLongtitude);
+        LatLng latLng2 = new LatLng(mLatitude2,mLongtitude2);
+        PlanNode stNode2 = PlanNode.withLocation(latLng);
+        PlanNode enNode2 = PlanNode.withLocation(latLng2);
 
+        PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", myLocation);
+        PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都", endaddress);
+
+        mSearch.walkingSearch((new WalkingRoutePlanOption())
+                .from(stNode2)
+                .to(enNode2));*/
 
     }
 
@@ -136,8 +148,13 @@ public class NewMapActivity extends Activity implements OnGetRoutePlanResultList
         option.setCoorType("bd09ll");
         option.setIsNeedAddress(true);
         option.setOpenGps(true);
-        option.setScanSpan(2000);
+        option.setScanSpan(1000);
         mLocationClient.setLocOption(option);
+        if (!mLocationClient.isStarted()){
+
+            mLocationClient.start();
+
+        }
     }
 
 private void GERSearch(){
@@ -238,17 +255,11 @@ private void GERSearch(){
         LatLng pt2 = new LatLng(mLat2, mLon2);
 
         // 构建 route搜索参数（百度地图demo）
-        RouteParaOption para2 = new RouteParaOption()
-                .startPoint(pt1)
-//          .startName("天安门")
-//          .endPoint(ptEnd);
-                .endName("蚂蚁物流")
-                .cityName("成都");
 
         //自己写的
         NaviParaOption para = new NaviParaOption()
-                .startPoint(pt1).endPoint(pt2)
-                .startName(myLocation).endName(endaddress);
+                .startPoint(pt1).endPoint(pt2);
+                //.startName(myLocation).endName(endaddress);
 
         try {
 // 调起百度地图步行导航
@@ -329,12 +340,44 @@ private void GERSearch(){
         }
     }
 
+ private class AsynSearch extends AsyncTask{
+     @Override
+     protected Object doInBackground(Object[] params) {
+         try {
+             Thread.sleep(2000);
+         } catch (InterruptedException e) {
+             e.printStackTrace();
+         }
+         return null;
+     }
 
+     @Override
+     protected void onPostExecute(Object o) {
+         CenterToMyLocation();
+     }
+ }
     //定位到我的位置
     private void CenterToMyLocation() {
         LatLng latLng = new LatLng(mLatitude,mLongtitude);
+        LatLng latLng2 = new LatLng(mLatitude2,mLongtitude2);
         MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
         mBaiduMap.animateMapStatus(msu);
+        //坐标搜索
+        PlanNode stNode2 = PlanNode.withLocation(latLng);
+        PlanNode enNode2 = PlanNode.withLocation(latLng2);
+        String strInfo = String.format("起点坐标纬度：%f 经度：%f",
+                mLatitude, mLongtitude);
+        String endInfo = String.format("终点坐标纬度：%f 经度：%f",
+                mLatitude2, mLongtitude2);
+
+        Log.i("baidu",strInfo);
+        Log.i("baidu",endInfo);
+        //PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", myLocation);
+        //PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都", endaddress);
+
+        mSearch.walkingSearch((new WalkingRoutePlanOption())
+                .from(stNode2)
+                .to(enNode2));
     }
 
     @Override
@@ -415,16 +458,16 @@ private void GERSearch(){
             return;
         }
         mBaiduMap.clear();
-        mBaiduMap.addOverlay(new MarkerOptions().position(geoCodeResult.getLocation())
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.icon_marka)));
+//        mBaiduMap.addOverlay(new MarkerOptions().position(geoCodeResult.getLocation())
+//                .icon(BitmapDescriptorFactory
+//                        .fromResource(R.drawable.icon_marka)));
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(geoCodeResult
                 .getLocation()));
         mLatitude2=geoCodeResult.getLocation().latitude;
         mLongtitude2 = geoCodeResult.getLocation().longitude;
         String strInfo = String.format("纬度：%f 经度：%f",
                 geoCodeResult.getLocation().latitude, geoCodeResult.getLocation().longitude);
-       // Toast.makeText(NewMapActivity.this, strInfo, Toast.LENGTH_LONG).show();
+        //Toast.makeText(NewMapActivity.this, strInfo, Toast.LENGTH_LONG).show();
 
 
     }
@@ -463,6 +506,8 @@ private void GERSearch(){
             mLatitude = bdLocation.getLatitude();
             mLongtitude =bdLocation.getLongitude();
             myLocation = bdLocation.getAddrStr();
+
+            //Toast.makeText(context,myLocation,Toast.LENGTH_SHORT).show();
             if (isFirstin){
                 //坐标
                // LatLng latLng = new LatLng(30.67,104.06);
@@ -561,6 +606,7 @@ private void GERSearch(){
         //在activity执行onResume时执行mMapView. onResume ()，实现地图生命周期管理
         mMapView.onResume();
         MobclickAgent.onResume(this);
+
     }
 
     @Override
@@ -568,11 +614,9 @@ private void GERSearch(){
         super.onStart();
         //开启定位
         mBaiduMap.setMyLocationEnabled(true);
-        if (!mLocationClient.isStarted()){
+        AsynSearch search = new AsynSearch();
+        search.execute();
 
-            mLocationClient.start();
-
-        }
     }
 
     @Override
@@ -580,7 +624,7 @@ private void GERSearch(){
         super.onStop();
         //停止定位
         mBaiduMap.setMyLocationEnabled(false);
-        mLocationClient.stop();
+
     }
 
     @Override

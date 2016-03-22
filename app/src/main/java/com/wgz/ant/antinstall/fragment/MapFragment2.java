@@ -3,6 +3,7 @@ package com.wgz.ant.antinstall.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,16 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.RouteLine;
 import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.route.DrivingRoutePlanOption;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.OnGetRoutePlanResultListener;
@@ -64,19 +71,36 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
     private LocationClient mLocationClient;
     private  MyLocationListener mLocationlistener;
     private  boolean isFirstin = true;
-    private double mLatitude,mLongtitude;
+    private double mLatitude,mLongtitude,mLatitude2,mLongtitude2,mLatitude3,mLongtitude3;
     private String myLocation;
-
+    GeoCoder msearch2 = null; // 搜索模块，也可去掉地图模块独立使用
+    GeoCoder msearch1 = null;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.maptest,null);
+        View view = inflater.inflate(R.layout.maptest, null);
         initview(view);
 
         return  view;
     }
+/*
+终点名称转换坐标
+ */
+    private void GERSearch2(String address){
+        msearch2.geocode(new GeoCodeOption().city(
+                "成都").address(address));
 
 
+    }
+    /*
+起点名称转换坐标
+ */
+    private void GERSearch1(String address){
+        msearch1.geocode(new GeoCodeOption().city(
+                "成都").address(address));
+
+
+    }
     //定位到我的位置
     private void CenterToMyLocation() {
         LatLng latLng = new LatLng(mLatitude,mLongtitude);
@@ -95,6 +119,44 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         mLocationClient.setLocOption(option);
         mLocationClient.start();
     }
+
+   /* @Override
+    public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+        if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(getActivity().getApplicationContext(), "抱歉，未能找到结果", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+        mBaidumap.clear();
+        mBaidumap.addOverlay(new MarkerOptions().position(geoCodeResult.getLocation())
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.icon_marka)));
+        mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(geoCodeResult
+                .getLocation()));
+        mLatitude2=geoCodeResult.getLocation().latitude;
+        mLongtitude2 = geoCodeResult.getLocation().longitude;
+        String strInfo = String.format("纬度：%f 经度：%f",
+                geoCodeResult.getLocation().latitude, geoCodeResult.getLocation().longitude);
+        //Toast.makeText(NewMapActivity.this, strInfo, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+        if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+            Toast.makeText(getActivity().getApplicationContext(), "抱歉，未能找到结果", Toast.LENGTH_LONG)
+                    .show();
+            return;
+        }
+        mBaidumap.clear();
+        mBaidumap.addOverlay(new MarkerOptions().position(reverseGeoCodeResult.getLocation())
+                .icon(BitmapDescriptorFactory
+                        .fromResource(R.drawable.icon_marka)));
+        mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(reverseGeoCodeResult
+                .getLocation()));
+        Toast.makeText(getActivity().getApplicationContext(), reverseGeoCodeResult.getAddress(),
+                Toast.LENGTH_LONG).show();
+    }*/
+
     private  class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
@@ -145,6 +207,61 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
         editSt = (EditText) view.findViewById(R.id.start);
         editEn = (EditText)view. findViewById(R.id.end);
         mMapView = (MapView) view.findViewById(R.id.map);
+        // 初始化搜索模块，注册事件监听
+        msearch2 = GeoCoder.newInstance();
+        msearch1 = GeoCoder.newInstance();
+        msearch1.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+                if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                    Toast.makeText(getActivity().getApplicationContext(), "抱歉，未能找到结果", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+                mBaidumap.clear();
+                mBaidumap.addOverlay(new MarkerOptions().position(geoCodeResult.getLocation())
+                        .icon(BitmapDescriptorFactory
+                                .fromResource(R.drawable.icon_marka)));
+                mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(geoCodeResult
+                        .getLocation()));
+                mLatitude3=geoCodeResult.getLocation().latitude;
+                mLongtitude3 = geoCodeResult.getLocation().longitude;
+                String strInfo = String.format("纬度：%f 经度：%f",
+                        geoCodeResult.getLocation().latitude, geoCodeResult.getLocation().longitude);
+                //Toast.makeText(NewMapActivity.this, strInfo, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+
+            }
+        });
+        msearch2.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+                if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                    Toast.makeText(getActivity().getApplicationContext(), "抱歉，未能找到结果", Toast.LENGTH_LONG)
+                            .show();
+                    return;
+                }
+                mBaidumap.clear();
+                mBaidumap.addOverlay(new MarkerOptions().position(geoCodeResult.getLocation())
+                        .icon(BitmapDescriptorFactory
+                                .fromResource(R.drawable.icon_marka)));
+                mBaidumap.setMapStatus(MapStatusUpdateFactory.newLatLng(geoCodeResult
+                        .getLocation()));
+                mLatitude2=geoCodeResult.getLocation().latitude;
+                mLongtitude2 = geoCodeResult.getLocation().longitude;
+                String strInfo = String.format("纬度：%f 经度：%f",
+                        geoCodeResult.getLocation().latitude, geoCodeResult.getLocation().longitude);
+                //Toast.makeText(NewMapActivity.this, strInfo, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+
+            }
+        });
         editSt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -194,8 +311,25 @@ public class MapFragment2 extends Fragment implements BaiduMap.OnMapClickListene
             mBaidumap.clear();
             // 处理搜索按钮响应
             //设置起终点信息，对于tranist search 来说，城市名无意义
-            PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", editSt.getText().toString());
-            PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都", editEn.getText().toString());
+            GERSearch1(editSt.getText().toString().trim());
+            GERSearch2(editEn.getText().toString().trim());
+
+            LatLng latLng = new LatLng(mLatitude3,mLongtitude3);
+            LatLng latLng2 = new LatLng(mLatitude2,mLongtitude2);
+            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
+            mBaidumap.animateMapStatus(msu);
+            //坐标搜索
+            PlanNode stNode = PlanNode.withLocation(latLng);
+            PlanNode enNode = PlanNode.withLocation(latLng2);
+            String strInfo = String.format("起点坐标纬度：%f 经度：%f",
+                    mLatitude, mLongtitude);
+            String endInfo = String.format("终点坐标纬度：%f 经度：%f",
+                    mLatitude2, mLongtitude2);
+
+            Log.i("baidu", strInfo);
+            Log.i("baidu",endInfo);
+            //PlanNode stNode = PlanNode.withCityNameAndPlaceName("成都", editSt.getText().toString());
+            //PlanNode enNode = PlanNode.withCityNameAndPlaceName("成都", editEn.getText().toString());
 
             // 实际使用中请对起点终点城市进行正确的设定
             if (v.getId() == R.id.drive) {
